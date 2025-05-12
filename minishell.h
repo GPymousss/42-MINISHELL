@@ -5,8 +5,10 @@
 # include "parsing/parsing.h"
 
 // readline, rl_clear_history, rl_on_new_line,
-// rl_replace_line, rl_redisplay, add_history
+// rl_replace_line, rl_redisplay
 # include <readline/readline.h>
+// add_history
+# include <readline/history.h>
 // printf, perror
 # include <stdio.h>
 // malloc, free, exit, getenv
