@@ -3,6 +3,7 @@
 
 # include "exec/exec.h"
 # include "parsing/parsing.h"
+# include "libft/libft.h"
 
 // readline, rl_clear_history, rl_on_new_line,
 // rl_replace_line, rl_redisplay
@@ -36,6 +37,8 @@
 # include <sys/ioctl.h>
 // true / false
 # include <stdbool.h>
+// libft
+# include <stddef.h>
 
 typedef enum s_symbol
 {
