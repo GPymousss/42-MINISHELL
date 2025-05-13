@@ -3,9 +3,17 @@
 
 # include "../minishell.h"
 
+typedef enum s_quote
+{
+	NONE,
+	SINGLE,
+	DOUBLE,
+}	t_quote;
+
 typedef struct s_token
 {
 	char			*value;
+	t_quote			quote_type;
 	struct s_token	*next;
 }	t_token;
 
