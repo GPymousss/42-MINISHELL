@@ -34,6 +34,8 @@
 # include <term.h>
 // ioctl
 # include <sys/ioctl.h>
+// true / false
+# include <stdbool.h>
 
 typedef enum s_symbol
 {
