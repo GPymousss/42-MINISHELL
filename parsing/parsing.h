@@ -3,4 +3,7 @@
 
 # include "../minishell.h"
 
+// init shell stuct
+t_shell		*p_init_shell_struct(void);
+
 #endif
