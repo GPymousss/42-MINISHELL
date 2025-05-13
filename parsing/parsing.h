@@ -24,4 +24,11 @@ void		p_free_node_lst(t_shell *node);
 
 bool		p_is_valid(int argc, char **argv, char **envp, t_shell *lst);
 
+t_token		*init_token(char *value, t_quote quote_type, t_token *next);
+void		token_add_back(t_token **tokens, t_token *new);
+t_token		*tokenize(char *input);
+void		token_clear(t_token **tokens);
+int			handle_default_token(char **input, char *start, t_token **tokens);
+int			is_metacharacter(char c);
+
 #endif
