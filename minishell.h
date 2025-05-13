@@ -35,4 +35,29 @@
 // ioctl
 # include <sys/ioctl.h>
 
+typedef enum s_symbol
+{
+	REDIR_IN,
+	REDIR_OUT,
+	HERE_DOC,
+	APPEND,
+}	t_symbol;
+
+typedef struct s_redir
+{
+	t_symbol		symbol;
+	char			*str;
+	struct s_redir	*next;
+}	t_redir;
+
+typedef struct s_shell
+{
+	char			**cmd;
+	t_redir			*redir;
+	size_t			nb_pipe;
+	int				wstatus;
+	int				hdc_idx;
+	struct s_shell	*next;
+}	t_shell;
+
 #endif
