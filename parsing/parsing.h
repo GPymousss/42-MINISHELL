@@ -22,4 +22,6 @@ void		p_create_node_lst(t_shell **shell);
 void		p_free_all_lst(t_shell **head);
 void		p_free_node_lst(t_shell *node);
 
+bool		p_is_valid(int argc, char **argv, char **envp, t_shell *lst);
+
 #endif
