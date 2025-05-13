@@ -1,6 +1,6 @@
 #include "../parsing.h"
 
-t_shell	*p_init_shell_struct(void)
+t_shell	*p_init_lst(void)
 {
 	t_shell	*lst;
 
