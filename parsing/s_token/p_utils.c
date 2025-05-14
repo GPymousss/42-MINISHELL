@@ -52,7 +52,7 @@ void	token_clear(t_token **tokens)
 
 void	token_add_back(t_token **tokens, t_token *new)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	if (!tokens || !new)
 		return ;

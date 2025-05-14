@@ -13,9 +13,9 @@ static int	handle_operator(char **input, t_token **tokens)
 	ft_memset(operator, 0, 3);
 	i = 0;
 	operator[i] = (*input)[i];
-	if (((*input)[i] == '>' && (*input)[i + 1] == '>') || 
+	if (((*input)[i] == '>' && (*input)[i + 1] == '>') ||
 		((*input)[i] == '<' && (*input)[i + 1] == '<') ||
-		((*input)[i] == '|' && (*input)[i + 1] == '|') || 
+		((*input)[i] == '|' && (*input)[i + 1] == '|') ||
 		((*input)[i] == '&' && (*input)[i + 1] == '&'))
 	{
 		i++;
@@ -26,7 +26,7 @@ static int	handle_operator(char **input, t_token **tokens)
 	return (1);
 }
 
-static int handle_quote(char **input, t_token **tokens, t_quote type)
+static int	handle_quote(char **input, t_token **tokens, t_quote type)
 {
 	char	*content;
 	int		i;
@@ -50,7 +50,7 @@ static int	process_token(char **input, t_token **tokens)
 	start = *input;
 	if (**input == '\'' || **input == '"')
 	{
-		 if (**input == '\'')
+		if (**input == '\'')
 			type = SINGLE;
 		else
 			type = DOUBLE;
