@@ -1,18 +1,49 @@
 #include "../parsing.h"
 
-void	p_free_all_lst(t_shell **head)
+static void	p_free_split(char **arr)
 {
-	t_shell	*tmp;
-	t_shell	*next;
+	int	i;
 
-	if (!head || !*head)
+	if (!arr)
 		return ;
-	tmp = *head;
-	while (tmp)
+	i = 0;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
+}
+
+static void	p_free_cmd_list(t_cmd *cmd)
+{
+	t_cmd	*tmp;
+
+	while (cmd)
 	{
-		next = tmp->next;
-		p_free_node_lst(tmp);
-		tmp = next;
+		tmp = cmd->next;
+		p_free_split(cmd->cmd);
+		free(cmd);
+		cmd = tmp;
 	}
-	*head = NULL;
+}
+
+static void	p_free_redir_list(t_redir *redir)
+{
+	t_redir	*tmp;
+
+	while (redir)
+	{
+		tmp = redir->next;
+		free(redir->str);
+		free(redir);
+		redir = tmp;
+	}
+}
+
+void	p_free_node_lst(t_shell *node)
+{
+	if (!node)
+		return ;
+	p_free_split(node->envp);
+	p_free_cmd_list(node->cmd);
+	p_free_redir_list(node->redir);
+	free(node);
 }

@@ -1,13 +1,11 @@
 #include "../parsing.h"
 
-void	p_create_node_lst(t_shell **head)
+void	p_redir_add_back(t_redir **head, t_redir *new)
 {
-	t_shell	*new;
-	t_shell	*tmp;
+	t_redir	*tmp;
 
-	new = p_init_lst();
-	if (!new)
-		return (NULL);
+	if (!head || !new)
+		return ;
 	if (!*head)
 	{
 		*head = new;

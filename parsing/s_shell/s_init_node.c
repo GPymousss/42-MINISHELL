@@ -7,11 +7,13 @@ t_shell	*p_init_lst(void)
 	lst = malloc(sizeof(t_shell));
 	if (!lst)
 		return (NULL);
+	lst->envp = NULL;
 	lst->cmd = NULL;
 	lst->redir = NULL;
 	lst->nb_pipe = 0;
-	lst->wstatus = 0;
+	lst->fd_in = 0;
+	lst->fd_out = 0;
 	lst->hdc_idx = -1;
-	lst->next = NULL;
+	lst->wstatus = 0;
 	return (lst);
 }
