@@ -40,7 +40,7 @@
 // libft
 # include <stddef.h>
 
-typedef enum s_symbol
+typedef enum e_symbol
 {
 	REDIR_IN,
 	REDIR_OUT,
@@ -58,19 +58,18 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	char			**cmd;
+	t_redir			*redir;
 	struct s_cmd	*next;
 }	t_cmd;
 
 typedef struct s_shell
 {
-	char			**envp;
-	t_cmd			*cmd;
-	t_redir			*redir;
-	size_t			nb_pipe;
-	int				fd_in;
-	int				fd_out;
-	int				hdc_idx;
-	int				wstatus;
+	char	**envp;
+	t_cmd	*cmd;
+	size_t	nb_pipe;
+	int		fd_in;
+	int		fd_out;
+	int		wstatus;
 }	t_shell;
 
 #endif
