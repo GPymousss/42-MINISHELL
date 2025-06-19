@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 14:48:44 by gletilly          #+#    #+#             */
-/*   Updated: 2025/01/12 23:02:49 by gletilly         ###   ########.fr       */
+/*   Created: 2024/10/21 13:33:57 by lomont            #+#    #+#             */
+/*   Updated: 2025/05/27 00:16:18 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,25 @@
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	const unsigned char	*s;
-	unsigned char		*d;
+	size_t		i;
+	char		*tmp_dst;
+	const char	*tmp_src;
 
-	s = (const unsigned char *)src;
-	d = (unsigned char *)dest;
-	if (n == 0 || d == s)
-		return (dest);
-	if (d < s)
-		while (n--)
-			*d++ = *s++;
+	if (!dest && !src)
+		return (NULL);
+	i = 0;
+	tmp_dst = (char *)dest;
+	tmp_src = (char *)src;
+	if (tmp_dst > tmp_src)
+		while (n-- > 0)
+			tmp_dst[n] = tmp_src[n];
 	else
 	{
-		d += n;
-		s += n;
-		while (n--)
-			*(--d) = *(--s);
+		while (i < n)
+		{
+			tmp_dst[i] = tmp_src[i];
+			i++;
+		}
 	}
 	return (dest);
 }

@@ -1,0 +1,131 @@
+NAME = minishell
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
+
+SRC_FILES = \
+	libft/convert/ft_atoi.c \
+	libft/convert/ft_atol.c \
+	libft/convert/ft_itoa.c \
+	libft/convert/ft_tolower.c \
+	libft/convert/ft_toupper.c \
+	libft/gnl/get_next_line.c \
+	libft/is/ft_isalnum.c \
+	libft/is/ft_isalpha.c \
+	libft/is/ft_isascii.c \
+	libft/is/ft_isdigit.c \
+	libft/is/ft_isnegative.c \
+	libft/is/ft_isprint.c \
+	libft/is/ft_isspace.c \
+	libft/mem/ft_bzero.c \
+	libft/mem/ft_calloc.c \
+	libft/mem/ft_memchr.c \
+	libft/mem/ft_memcmp.c \
+	libft/mem/ft_memcpy.c \
+	libft/mem/ft_memmove.c \
+	libft/mem/ft_memset.c \
+	libft/print/ft_print_char.c \
+	libft/print/ft_print_hexaptr.c \
+	libft/print/ft_print_nbr.c \
+	libft/print/ft_print_str.c \
+	libft/printf/ft_printf.c \
+	libft/put/ft_put_unsigned.c \
+	libft/put/ft_putchar_fd.c \
+	libft/put/ft_putendl_fd.c \
+	libft/put/ft_puthexa_lower.c \
+	libft/put/ft_puthexa_ptr.c \
+	libft/put/ft_puthexa_upper.c \
+	libft/put/ft_putnbr_fd.c \
+	libft/put/ft_putstr_fd.c \
+	libft/str/ft_split.c \
+	libft/str/ft_strchr.c \
+	libft/str/ft_strdup.c \
+	libft/str/ft_striteri.c \
+	libft/str/ft_strjoin.c \
+	libft/str/ft_strlcat.c \
+	libft/str/ft_strlcpy.c \
+	libft/str/ft_strlen.c \
+	libft/str/ft_strmapi.c \
+	libft/str/ft_strcmp.c \
+	libft/str/ft_strncmp.c \
+	libft/str/ft_strnstr.c \
+	libft/str/ft_strrchr.c \
+	libft/str/ft_strtrim.c \
+	libft/str/ft_substr.c \
+	libft/struct/ft_addback.c \
+	libft/struct/ft_init.c \
+	libft/free/free_all.c \
+	libft/free/free_array.c \
+	libft/free/free_shell.c \
+	libft/free/free_redir_struct.c \
+	libft/free/free_cmd.c \
+	libft/free/free_tokens.c \
+	libft/free/free_envp_struct.c \
+	libft/print/ft_print_tab.c \
+	libft/shell/ft_cmd.c \
+	exec/exec_cmd.c \
+	exec/exec_utils.c \
+	exec/exec.c \
+	exec/here_doc.c \
+	exec/infile.c \
+	exec/outfile.c \
+	exec/pipex_utils.c \
+	exec/utils_exec.c \
+	exec/utils_path.c \
+	exec/utils_env.c \
+	exec/utils_env2.c \
+	builtins/cd.c \
+	builtins/cd_utils.c \
+	builtins/cd_utils2.c \
+	builtins/cd_args.c \
+	builtins/echo.c \
+	builtins/env.c \
+	builtins/exit.c \
+	builtins/export.c \
+	builtins/export_utils.c \
+	builtins/pwd.c \
+	builtins/unset.c \
+	builtins/unset_utils.c \
+	parsing/parsing.c \
+	parsing/parser.c \
+	parsing/expander_utils.c \
+	parsing/expander.c \
+	parsing/parser_utils.c \
+	parsing/tokenizer_utils.c \
+	parsing/tokenizer.c \
+	main.c
+
+OBJ_DIR = obj
+
+OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
+
+GREEN = \033[0;32m
+RED = \033[0;31m
+RESET = \033[0m
+CLEAR_LINE = \033[2K\r
+
+all: $(NAME)
+
+$(NAME): $(OBJ)
+	@printf "$(CLEAR_LINE)$(GREEN)Linking $(NAME)...$(RESET)"
+	@$(CC) $(CFLAGS) $(OBJ) -o $@ -lreadline
+	@printf "$(CLEAR_LINE)$(GREEN)$(NAME) compiled successfully!$(RESET)\n"
+
+$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
+	@printf "$(CLEAR_LINE)$(GREEN)Compiling $<...$(RESET)"
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+
+clean:
+	@rm -rf $(OBJ_DIR)
+	@printf "$(RED)Object files cleaned!$(RESET)\n"
+
+fclean: clean
+	@rm -f $(NAME)
+	@printf "$(RED)Executable $(NAME) removed!$(RESET)\n"
+
+re: fclean all
+
+.PHONY: all clean fclean re

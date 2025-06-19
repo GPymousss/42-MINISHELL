@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/08 23:31:15 by gletilly          #+#    #+#             */
-/*   Updated: 2025/01/12 23:02:51 by gletilly         ###   ########.fr       */
+/*   Created: 2024/10/21 00:04:35 by miniklar          #+#    #+#             */
+/*   Updated: 2025/05/27 00:16:24 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,12 @@
 
 void	*ft_memset(void *s, int c, size_t n)
 {
-	unsigned char	*ptr;
-	unsigned char	value;
 	size_t			i;
+	unsigned char	*ptr;
 
-	ptr = (unsigned char *)s;
-	value = (unsigned char)c;
 	i = 0;
+	ptr = (unsigned char *)s;
 	while (i < n)
-	{
-		ptr[i] = value;
-		i++;
-	}
+		ptr[i++] = (unsigned char) c;
 	return (s);
 }

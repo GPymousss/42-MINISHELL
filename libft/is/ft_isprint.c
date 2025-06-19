@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/08 15:24:46 by gletilly          #+#    #+#             */
-/*   Updated: 2025/01/12 23:03:36 by gletilly         ###   ########.fr       */
+/*   Created: 2024/10/21 00:04:45 by miniklar          #+#    #+#             */
+/*   Updated: 2025/05/27 00:16:57 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	ft_isprint(int c)
 {
-	if (c >= 32 && c <= 126)
-		return (16384);
-	return (0);
+	if (c >= 32 && c < 127)
+		return (1);
+	else
+		return (0);
 }

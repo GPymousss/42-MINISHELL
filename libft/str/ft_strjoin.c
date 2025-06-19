@@ -5,30 +5,26 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 21:20:31 by gletilly          #+#    #+#             */
-/*   Updated: 2025/01/12 23:02:07 by gletilly         ###   ########.fr       */
+/*   Created: 2024/10/31 17:37:41 by miniklar          #+#    #+#             */
+/*   Updated: 2025/05/27 00:14:35 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
-	size_t	s1len;
-	size_t	s2len;
-	char	*result;
-	char	*copy;
+	char	*new_s;
+	size_t	lens1;
+	size_t	lens2;
 
-	s1len = ft_strlen(s1);
-	s2len = ft_strlen(s2);
-	result = (char *)malloc(s1len + s2len + 1);
-	if (!result)
+	lens1 = ft_strlen(s1);
+	lens2 = ft_strlen(s2);
+	new_s = malloc(sizeof(char) * (lens1 + lens2 + 1));
+	if (!new_s)
 		return (NULL);
-	copy = result;
-	while (*s1)
-		*copy++ = *s1++;
-	while (*s2)
-		*copy++ = *s2++;
-	*copy = '\0';
-	return (result);
+	ft_memcpy(new_s, s1, lens1);
+	ft_memcpy(new_s + lens1, s2, lens2);
+	new_s[lens1 + lens2] = '\0';
+	return (new_s);
 }

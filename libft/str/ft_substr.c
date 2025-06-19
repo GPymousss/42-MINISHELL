@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 18:57:09 by gletilly          #+#    #+#             */
-/*   Updated: 2025/01/12 23:02:28 by gletilly         ###   ########.fr       */
+/*   Created: 2024/11/04 20:01:17 by lomont            #+#    #+#             */
+/*   Updated: 2025/05/27 00:13:59 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,24 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t	slen;
-	char	*copy;
+	char	*str;
 	size_t	i;
 
 	if (!s)
 		return (NULL);
-	slen = ft_strlen(s);
-	if (start >= slen)
-		return (ft_strdup(""));
-	if (len > slen - start)
-		len = slen - start;
-	copy = malloc(len + 1);
-	if (!copy)
-		return (NULL);
 	i = 0;
+	if (start >= ft_strlen(s))
+		return (ft_strdup(""));
+	if (len > ft_strlen(s + start))
+		len = ft_strlen(s + start);
+	str = malloc(sizeof(char) * len + 1);
+	if (!str)
+		return (NULL);
 	while (i < len)
 	{
-		copy[i] = s[start + i];
+		str[i] = s[start + i];
 		i++;
 	}
-	copy[i] = '\0';
-	return (copy);
+	str[i] = '\0';
+	return (str);
 }

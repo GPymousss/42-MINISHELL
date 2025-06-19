@@ -5,31 +5,27 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/17 23:09:30 by gletilly          #+#    #+#             */
-/*   Updated: 2025/01/12 23:02:15 by gletilly         ###   ########.fr       */
+/*   Created: 2024/10/30 23:12:03 by miniklar          #+#    #+#             */
+/*   Updated: 2025/05/27 00:14:25 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+char	*ft_strmapi(const char *s, char (*f)(unsigned int, char))
 {
-	unsigned int	index;
-	char			*copy;
-	size_t			len;
+	size_t	i;
+	char	*new_s;
 
-	if (!s || !f)
+	i = 0;
+	new_s = malloc((sizeof(char) * ft_strlen(s)) + 1);
+	if (!new_s)
 		return (NULL);
-	len = ft_strlen(s);
-	copy = (char *)malloc(len + 1);
-	if (!copy)
-		return (NULL);
-	index = 0;
-	while (index < len)
+	while (s[i] != '\0')
 	{
-		copy[index] = f(index, s[index]);
-		index++;
+		new_s[i] = f(i, s[i]);
+		i++;
 	}
-	copy[index] = '\0';
-	return (copy);
+	new_s[i] = '\0';
+	return (new_s);
 }

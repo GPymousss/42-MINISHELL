@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 17:21:12 by gletilly          #+#    #+#             */
-/*   Updated: 2025/01/12 23:02:00 by gletilly         ###   ########.fr       */
+/*   Created: 2024/10/24 16:31:30 by miniklar          #+#    #+#             */
+/*   Updated: 2025/05/27 00:14:43 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@ char	*ft_strchr(const char *s, int c)
 {
 	while (*s)
 	{
-		if (*s == (char)c)
+		if (*s == (const char)c)
 			return ((char *)s);
 		s++;
 	}
-	if (*s == (char)c)
+	if (*s == (const char)c)
 		return ((char *)s);
-	return (NULL);
+	else
+		return (NULL);
 }

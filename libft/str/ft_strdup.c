@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 23:16:30 by gletilly          #+#    #+#             */
-/*   Updated: 2025/01/12 23:02:02 by gletilly         ###   ########.fr       */
+/*   Created: 2024/10/29 18:29:13 by lomont            #+#    #+#             */
+/*   Updated: 2025/05/27 00:14:41 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 char	*ft_strdup(const char *s)
 {
-	char	*copy;
-	size_t	len;
+	char	*tmp;
+	size_t	srclen;
 
-	len = ft_strlen(s) + 1;
-	copy = (char *)malloc(len);
-	if (copy == NULL)
+	srclen = ft_strlen(s) + 1;
+	tmp = malloc(srclen * sizeof(char));
+	if (!tmp)
 		return (NULL);
-	ft_strlcpy(copy, s, len);
-	return (copy);
+	ft_memmove(tmp, s, srclen);
+	return (tmp);
 }

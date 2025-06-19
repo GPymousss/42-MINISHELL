@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 17:21:22 by gletilly          #+#    #+#             */
-/*   Updated: 2025/01/12 23:03:35 by gletilly         ###   ########.fr       */
+/*   Created: 2024/10/27 02:31:54 by lomont            #+#    #+#             */
+/*   Updated: 2025/05/27 00:16:49 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
-		return (2048);
-	return (0);
+		return (1);
+	else
+		return (0);
 }

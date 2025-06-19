@@ -1,29 +1,52 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/27 00:31:50 by gletilly          #+#    #+#             */
+/*   Updated: 2025/06/15 10:37:53 by llangana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static void	debug_print_shell(t_shell *lst)
+static void	handle_command(t_shell *shell, char *command)
 {
-	printf("Shell structure:\n");
-	printf("  Number of pipes: %zu\n", lst->nb_pipe);
-	p_print_commands(lst->cmd);
+	shell->command = command;
+	if (parsing(shell))
+		exec(shell);
+	if (ft_strncmp(command, "", 1) != 0)
+		add_history(command);
+	free(command);
+	shell->command = NULL;
+	if (shell->cmd)
+	{
+		free_cmd_struct(shell->cmd);
+		shell->cmd = NULL;
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell	*lst;
-	bool	success;
+	char	*command;
+	t_shell	*shell;
 
-	(void)argc;
-	(void)argv;
+	shell = init_shell();
+	shell->envp = envp;
 	while (1)
 	{
-		lst = p_init_lst();
-		if (!lst)
-			exit(EXIT_FAILURE);
-		p_set_envp(lst, envp);
-		success = p_is_valid(envp, lst);
-		if (success)
-			debug_print_shell(lst);
-		p_free_node_lst(lst);
+		command = readline("bash-5.1$ ");
+		if (command == NULL)
+		{
+			free_shell(shell);
+			free(shell);
+			exit(EXIT_SUCCESS);
+		}
+		handle_command(shell, command);
 	}
-	return (0);
+	(void)argc;
+	(void)argv;
+	return (EXIT_SUCCESS);
 }

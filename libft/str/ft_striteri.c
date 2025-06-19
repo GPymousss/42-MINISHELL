@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/17 23:34:34 by gletilly          #+#    #+#             */
-/*   Updated: 2025/01/12 23:02:05 by gletilly         ###   ########.fr       */
+/*   Created: 2024/10/30 22:44:39 by miniklar          #+#    #+#             */
+/*   Updated: 2025/05/27 00:14:37 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,12 @@
 
 void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	unsigned int	index;
-	size_t			len;
+	size_t	i;
 
-	if (s && f)
+	i = 0;
+	while (s[i] != '\0')
 	{
-		len = ft_strlen(s);
-		index = 0;
-		while (index < len)
-		{
-			f(index, &s[index]);
-			index++;
-		}
-		s[index] = '\0';
+		f(i, &s[i]);
+		i++;
 	}
 }

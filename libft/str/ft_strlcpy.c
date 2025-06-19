@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 18:07:45 by gletilly          #+#    #+#             */
-/*   Updated: 2025/01/12 23:02:11 by gletilly         ###   ########.fr       */
+/*   Created: 2024/10/21 00:04:54 by miniklar          #+#    #+#             */
+/*   Updated: 2025/05/27 00:14:29 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,15 @@
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
-	size_t	src_len;
-	size_t	n;
+	size_t	srclen;
 
-	src_len = ft_strlen(src);
-	if (size == 0)
-		return (src_len);
-	n = size - 1;
-	while (n > 0 && *src != '\0')
+	srclen = ft_strlen(src);
+	if (srclen + 1 < size)
+		ft_memcpy(dest, src, srclen + 1);
+	else if (size != 0)
 	{
-		*dest = *src;
-		dest++;
-		src++;
-		n--;
+		ft_memcpy(dest, src, size - 1);
+		dest[size - 1] = 0;
 	}
-	*dest = '\0';
-	return (src_len);
+	return (srclen);
 }

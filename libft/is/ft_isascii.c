@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 16:47:25 by gletilly          #+#    #+#             */
-/*   Updated: 2025/01/12 23:03:33 by gletilly         ###   ########.fr       */
+/*   Created: 2024/10/21 00:04:39 by miniklar          #+#    #+#             */
+/*   Updated: 2025/05/27 00:16:39 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@ int	ft_isascii(int c)
 {
 	if (c >= 0 && c <= 127)
 		return (1);
-	return (0);
+	else
+		return (0);
 }

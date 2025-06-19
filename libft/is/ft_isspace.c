@@ -5,15 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/14 22:28:05 by gletilly          #+#    #+#             */
-/*   Updated: 2025/05/14 22:29:10 by gletilly         ###   ########.fr       */
+/*   Created: 2025/01/28 01:44:03 by lomont            #+#    #+#             */
+/*   Updated: 2025/05/27 00:17:00 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-int	ft_isspace(char c)
+int	ft_isspace(int c)
 {
-	return (c == ' ' || c == '\t' || c == '\n'
-		|| c == '\v' || c == '\f' || c == '\r');
+	if ((c >= 9 && c <= 13) || (c == 32))
+		return (1);
+	else
+		return (0);
 }
