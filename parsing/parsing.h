@@ -6,7 +6,7 @@
 /*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 00:26:23 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/04 23:09:59 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/07/05 23:39:36 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include "../exec/exec.h"
 
 int			tokenize(const char *line, t_token **tokens);
+void		add_token(t_token **tokens, char *value,
+				t_token_type type, t_quote quote);
+int			handle_operator(const char *line, int *i, t_token **tokens);
 bool		is_whitespace(char c);
 bool		is_operator_start(char c);
 bool		is_redirection(const char *str);

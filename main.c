@@ -6,7 +6,7 @@
 /*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 00:31:50 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/05 04:39:39 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/07/05 23:35:46 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ static void	handle_command(t_shell *shell, char *input)
 		free(input);
 		return ;
 	}
-	if (ft_strncmp(input, "DEBUG ", 6) == 0)
-		debug_full_parsing(shell, input + 6);
-	else if (parsing(shell))
+	if (parsing(shell))
 		exec(shell);
 	if (ft_strncmp(input, "", 1) != 0)
 		add_history(input);

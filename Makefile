@@ -52,7 +52,6 @@ SRC_FILES = \
 	libft/str/ft_strtrim.c \
 	libft/str/ft_substr.c \
 	libft/struct/ft_addback.c \
-	libft/struct/ft_init.c \
 	libft/free/free_all.c \
 	libft/free/free_array.c \
 	libft/free/free_shell.c \
@@ -60,7 +59,6 @@ SRC_FILES = \
 	libft/free/free_cmd.c \
 	libft/free/free_tokens.c \
 	libft/free/free_envp_struct.c \
-	libft/free/ft_strjoin_free.c \
 	libft/print/ft_print_tab.c \
 	libft/shell/ft_cmd.c \
 	parsing/parsing.c \
@@ -71,6 +69,7 @@ SRC_FILES = \
 	parsing/parser_utils2.c \
 	parsing/tokenizer_utils.c \
 	parsing/tokenizer.c \
+	parsing/tokenizer_helpers.c \
 	exec/exec.c \
 	exec/external_cmd.c \
 	exec/path_utils.c \
@@ -85,7 +84,8 @@ SRC_FILES = \
 	exec/builtin_export.c \
 	exec/builtin_unset.c \
 	exec/env_utils.c \
-	debug.c \
+	exec/env_utils2.c \
+	init_shell.c \
 	main.c
 
 OBJ_DIR = obj

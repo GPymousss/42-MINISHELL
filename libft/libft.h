@@ -6,7 +6,7 @@
 /*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 00:22:56 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/05 22:39:58 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/07/05 23:26:27 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int			ft_puthexa_ptr(unsigned long address);
 
 // GET_NEXT_LINE
 # define BUFFER_SIZE 42
+
 char		*get_next_line(int fd);
 
 #endif

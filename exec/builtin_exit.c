@@ -36,7 +36,6 @@ int	builtin_exit(t_shell *shell, t_cmd *cmd)
 {
 	int	exit_code;
 
-	ft_putendl_fd("exit", STDERR_FILENO);
 	if (!cmd->args[1])
 	{
 		free_shell(shell);
