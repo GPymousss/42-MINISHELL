@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:28:29 by llangana          #+#    #+#             */
-/*   Updated: 2025/06/13 14:41:17 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/04 23:03:22 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_cmd	*new_cmd(void)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	cmd->cmd = NULL;
+	cmd->args = NULL;
 	cmd->redir = NULL;
 	cmd->next = NULL;
 	return (cmd);
@@ -69,22 +69,22 @@ char	*ft_strjoin_char(char *str, char c)
 
 void	add_arg_to_cmd(t_cmd *cmd, char *arg)
 {
-	char	**new_cmd;
+	char	**new_args;
 	int		count;
 	int		i;
 
 	count = 0;
-	if (cmd->cmd)
-		while (cmd->cmd[count])
+	if (cmd->args)
+		while (cmd->args[count])
 			count++;
-	new_cmd = malloc(sizeof(char *) * (count + 2));
-	if (!new_cmd)
+	new_args = malloc(sizeof(char *) * (count + 2));
+	if (!new_args)
 		return ;
 	i = -1;
 	while (++i < count)
-		new_cmd[i] = cmd->cmd[i];
-	new_cmd[count] = ft_strdup(arg);
-	new_cmd[count + 1] = NULL;
-	free(cmd->cmd);
-	cmd->cmd = new_cmd;
+		new_args[i] = cmd->args[i];
+	new_args[count] = ft_strdup(arg);
+	new_args[count + 1] = NULL;
+	free(cmd->args);
+	cmd->args = new_args;
 }

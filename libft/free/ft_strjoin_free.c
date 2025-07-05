@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_tokens.c                                      :+:      :+:    :+:   */
+/*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 16:18:35 by lomont            #+#    #+#             */
-/*   Updated: 2025/07/04 23:00:29 by gletilly         ###   ########.fr       */
+/*   Created: 2025/07/05 22:39:33 by gletilly          #+#    #+#             */
+/*   Updated: 2025/07/05 22:39:33 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-void	free_tokens(t_token *token)
+char	*ft_strjoin_free(char *s1, char *s2)
 {
-	t_token	*tmp;
+	char	*result;
 
-	while (token)
-	{
-		tmp = token->next;
-		if (token->value)
-			free(token->value);
-		free(token);
-		token = tmp;
-	}
+	result = ft_strjoin(s1, s2);
+	free(s1);
+	free(s2);
+	return (result);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 00:27:29 by gletilly          #+#    #+#             */
-/*   Updated: 2025/06/13 14:28:54 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/05 23:00:19 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@
 # include "libft/libft.h"
 # include "exec/exec.h"
 # include "parsing/parsing.h"
+
+t_shell	*init_shell(char **envp);
 
 #endif

@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   free_redir_struct.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:18:38 by lomont            #+#    #+#             */
-/*   Updated: 2025/05/27 00:17:19 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/07/04 23:00:21 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-void	free_redir_struct(t_redir *redir)
+void	free_redirs(t_redir *redir)
 {
 	t_redir	*tmp;
 
 	while (redir)
 	{
 		tmp = redir->next;
-		free(redir->str);
+		if (redir->file)
+			free(redir->file);
 		free(redir);
 		redir = tmp;
 	}

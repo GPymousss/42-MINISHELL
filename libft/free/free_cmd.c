@@ -3,24 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   free_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:18:53 by lomont            #+#    #+#             */
-/*   Updated: 2025/05/27 00:17:17 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/07/04 23:00:15 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-void	free_cmd_struct(t_cmd *cmd)
+void	free_cmds(t_cmd *cmd)
 {
 	t_cmd	*tmp;
 
 	while (cmd)
 	{
 		tmp = cmd->next;
-		free_array(cmd->cmd);
-		free_redir_struct(cmd->redir);
+		if (cmd->args)
+			free_array(cmd->args);
+		if (cmd->redir)
+			free_redirs(cmd->redir);
 		free(cmd);
 		cmd = tmp;
 	}

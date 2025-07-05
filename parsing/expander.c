@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:28:36 by llangana          #+#    #+#             */
-/*   Updated: 2025/06/13 16:42:23 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/04 23:02:33 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	process_expansion(t_shell *shell, t_token *token)
 	i = 0;
 	while (token->value[i])
 	{
-		if (token->value[i] == '$' && token->type != SINGLE)
+		if (token->value[i] == '$' && token->quote != SINGLE)
 		{
 			i++;
 			new_str = ft_strjoin_free(new_str,
@@ -79,7 +79,7 @@ void	expand_tokens(t_shell *shell, t_token *tokens)
 	cur = tokens;
 	while (cur)
 	{
-		if (cur->type == DOUBLE || cur->type == NONE)
+		if (cur->quote == DOUBLE || cur->quote == NONE)
 			process_expansion(shell, cur);
 		cur->value = remove_quotes(cur->value);
 		cur = cur->next;

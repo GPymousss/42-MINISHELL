@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:28:19 by llangana          #+#    #+#             */
-/*   Updated: 2025/06/15 10:45:51 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/04 23:14:10 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	handle_redirection(t_cmd *cmd, t_token **cur)
 	next = (*cur)->next;
 	if (!next)
 		return (syntax_error(NULL));
-	if (is_operator_start(next->value[0]))
+	if (next->type != TOKEN_WORD)
 	{
 		unexpected = next->value;
 		return (syntax_error(unexpected));
@@ -43,15 +43,14 @@ static int	handle_redirection(t_cmd *cmd, t_token **cur)
 	return (0);
 }
 
-static int	handle_pipe(t_shell *shell, t_cmd **cmd, t_token **cur)
+static int	handle_pipe(t_cmd **cmd, t_token **cur)
 {
-	if (!(*cmd)->cmd)
+	if (!(*cmd)->args)
 		return (syntax_error((*cur)->value));
 	(*cmd)->next = new_cmd();
 	if (!(*cmd)->next)
 		return (-1);
 	*cmd = (*cmd)->next;
-	shell->nb_pipe++;
 	*cur = (*cur)->next;
 	return (0);
 }
@@ -62,16 +61,16 @@ int	parse_tokens_to_cmds(t_shell *shell, t_token *tokens)
 	t_cmd	*cmd;
 
 	cmd = new_cmd();
-	shell->cmd = cmd;
+	shell->cmds = cmd;
 	cur = tokens;
 	while (cur)
 	{
-		if (ft_strcmp(cur->value, "|") == 0)
+		if (cur->type == TOKEN_PIPE)
 		{
-			if (handle_pipe(shell, &cmd, &cur) != 0)
+			if (handle_pipe(&cmd, &cur) != 0)
 				return (-1);
 		}
-		else if (is_redirection(cur->value))
+		else if (cur->type >= TOKEN_REDIR_IN && cur->type <= TOKEN_APPEND)
 		{
 			if (handle_redirection(cmd, &cur) != 0)
 				return (-1);

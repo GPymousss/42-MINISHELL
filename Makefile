@@ -60,38 +60,32 @@ SRC_FILES = \
 	libft/free/free_cmd.c \
 	libft/free/free_tokens.c \
 	libft/free/free_envp_struct.c \
+	libft/free/ft_strjoin_free.c \
 	libft/print/ft_print_tab.c \
 	libft/shell/ft_cmd.c \
-	exec/exec_cmd.c \
-	exec/exec_utils.c \
-	exec/exec.c \
-	exec/here_doc.c \
-	exec/infile.c \
-	exec/outfile.c \
-	exec/pipex_utils.c \
-	exec/utils_exec.c \
-	exec/utils_path.c \
-	exec/utils_env.c \
-	exec/utils_env2.c \
-	builtins/cd.c \
-	builtins/cd_utils.c \
-	builtins/cd_utils2.c \
-	builtins/cd_args.c \
-	builtins/echo.c \
-	builtins/env.c \
-	builtins/exit.c \
-	builtins/export.c \
-	builtins/export_utils.c \
-	builtins/pwd.c \
-	builtins/unset.c \
-	builtins/unset_utils.c \
 	parsing/parsing.c \
 	parsing/parser.c \
 	parsing/expander_utils.c \
 	parsing/expander.c \
 	parsing/parser_utils.c \
+	parsing/parser_utils2.c \
 	parsing/tokenizer_utils.c \
 	parsing/tokenizer.c \
+	exec/exec.c \
+	exec/external_cmd.c \
+	exec/path_utils.c \
+	exec/path_utils2.c \
+	exec/exec_errors.c \
+	exec/builtins.c \
+	exec/builtin_echo.c \
+	exec/builtin_env.c \
+	exec/builtin_exit.c \
+	exec/builtin_pwd.c \
+	exec/builtin_cd.c \
+	exec/builtin_export.c \
+	exec/builtin_unset.c \
+	exec/env_utils.c \
+	debug.c \
 	main.c
 
 OBJ_DIR = obj

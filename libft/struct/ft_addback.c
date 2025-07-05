@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_addback.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:22:57 by lomont            #+#    #+#             */
-/*   Updated: 2025/06/13 14:40:49 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/04 23:00:07 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,38 +63,19 @@ void	cmd_add_back(t_cmd **head, t_cmd *new)
 	tmp->next = new;
 }
 
-t_cmd	*add_cmd_to_shell(t_shell *shell, char **cmd_args)
+void	envp_add_back(t_envp **head, t_envp *new)
 {
-	t_cmd	*new_cmd;
+	t_envp	*tmp;
 
-	if (!shell || !cmd_args)
-		return (NULL);
-	new_cmd = init_cmd(cmd_args);
-	if (!new_cmd)
-		return (NULL);
-	cmd_add_back(&(shell->cmd), new_cmd);
-	shell->nb_pipe = get_cmd_count(shell->cmd) - 1;
-	return (new_cmd);
-}
-
-void	add_redir_to_cmd(t_cmd *cmd, t_symbol symbol, char *value)
-{
-	t_redir	*new;
-	t_redir	*cur;
-
-	new = malloc(sizeof(t_redir));
-	if (!new)
+	if (!head || !new)
 		return ;
-	new->symbol = symbol;
-	new->str = ft_strdup(value);
-	new->next = NULL;
-	if (!cmd->redir)
-		cmd->redir = new;
-	else
+	if (!*head)
 	{
-		cur = cmd->redir;
-		while (cur->next)
-			cur = cur->next;
-		cur->next = new;
+		*head = new;
+		return ;
 	}
+	tmp = *head;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
 }

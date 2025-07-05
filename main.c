@@ -3,50 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 00:31:50 by gletilly          #+#    #+#             */
-/*   Updated: 2025/06/15 10:37:53 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/05 04:39:39 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handle_command(t_shell *shell, char *command)
+void	debug_full_parsing(t_shell *shell, char *input);
+
+static void	handle_command(t_shell *shell, char *input)
 {
-	shell->command = command;
-	if (parsing(shell))
-		exec(shell);
-	if (ft_strncmp(command, "", 1) != 0)
-		add_history(command);
-	free(command);
-	shell->command = NULL;
-	if (shell->cmd)
+	shell->input = input;
+	if (!input || ft_strlen(input) == 0)
 	{
-		free_cmd_struct(shell->cmd);
-		shell->cmd = NULL;
+		free(input);
+		return ;
 	}
+	if (ft_strncmp(input, "DEBUG ", 6) == 0)
+		debug_full_parsing(shell, input + 6);
+	else if (parsing(shell))
+		exec(shell);
+	if (ft_strncmp(input, "", 1) != 0)
+		add_history(input);
+	free(input);
+	shell->input = NULL;
+	if (shell->tokens)
+	{
+		free_tokens(shell->tokens);
+		shell->tokens = NULL;
+	}
+	if (shell->cmds)
+	{
+		free_cmds(shell->cmds);
+		shell->cmds = NULL;
+	}
+}
+
+static void	handle_eof(t_shell *shell)
+{
+	ft_putendl_fd("exit", STDOUT_FILENO);
+	free_shell(shell);
+	exit(shell->exit_status);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*command;
+	char	*input;
 	t_shell	*shell;
 
-	shell = init_shell();
-	shell->envp = envp;
-	while (1)
-	{
-		command = readline("bash-5.1$ ");
-		if (command == NULL)
-		{
-			free_shell(shell);
-			free(shell);
-			exit(EXIT_SUCCESS);
-		}
-		handle_command(shell, command);
-	}
 	(void)argc;
 	(void)argv;
+	shell = init_shell(envp);
+	if (!shell)
+		return (EXIT_FAILURE);
+	while (1)
+	{
+		input = readline("bash-5.1$ ");
+		if (input == NULL)
+			handle_eof(shell);
+		handle_command(shell, input);
+	}
 	return (EXIT_SUCCESS);
 }

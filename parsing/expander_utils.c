@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:28:46 by llangana          #+#    #+#             */
-/*   Updated: 2025/06/14 11:30:09 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/05 22:57:06 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,24 @@ char	*get_env_value(char **envp, const char *name)
 	return (NULL);
 }
 
+static char	*get_env_from_list(t_envp *env, const char *name)
+{
+	t_envp	*current;
+
+	current = env;
+	while (current)
+	{
+		if (ft_strcmp(current->key, name) == 0)
+		{
+			if (current->value)
+				return (ft_strdup(current->value));
+			return (ft_strdup(""));
+		}
+		current = current->next;
+	}
+	return (NULL);
+}
+
 char	*expand_variable(t_shell *shell, const char *str, int *i)
 {
 	int		start;
@@ -44,7 +62,7 @@ char	*expand_variable(t_shell *shell, const char *str, int *i)
 	char	*val;
 
 	if (str[*i] == '?')
-		return ((*i)++, ft_itoa(shell->wstatus));
+		return ((*i)++, ft_itoa(shell->exit_status));
 	start = *i;
 	while (ft_isalnum(str[*i]) || str[*i] == '_')
 		(*i)++;
@@ -53,7 +71,7 @@ char	*expand_variable(t_shell *shell, const char *str, int *i)
 	name = ft_substr(str, start, *i - start);
 	if (!name)
 		return (NULL);
-	val = get_env_value(shell->envp, name);
+	val = get_env_from_list(shell->env, name);
 	free(name);
 	if (!val)
 	{

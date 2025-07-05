@@ -3,66 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 13:27:35 by gletilly          #+#    #+#             */
-/*   Updated: 2025/05/27 13:52:29 by gletilly         ###   ########.fr       */
+/*   Created: 2025/07/05 04:37:06 by gletilly          #+#    #+#             */
+/*   Updated: 2025/07/05 04:37:06 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "builtins.h"
 #include "exec.h"
 
-void	exec(t_shell *shell)
+int	exec(t_shell *shell)
 {
-	if (shell->cmd->next == NULL && is_cmd_built_ins(shell) == true)
-		exec_built_in(shell);
-	else
-		exec_cmd(shell);
+	t_cmd	*current;
+	int		last_exit_status;
+
+	if (!shell || !shell->cmds)
+		return (1);
+	current = shell->cmds;
+	last_exit_status = 0;
+	while (current)
+	{
+		if (!current->args || !current->args[0])
+		{
+			current = current->next;
+			continue ;
+		}
+		last_exit_status = execute_single_cmd(shell, current);
+		shell->exit_status = last_exit_status;
+		current = current->next;
+	}
+	return (last_exit_status);
 }
 
-bool	exec_built_in_inside_child(t_shell *shell)
+int	execute_single_cmd(t_shell *shell, t_cmd *cmd)
 {
-	if (ft_strncmp(shell->cmd->cmd[0], "pwd", 4) == 0)
-		shell->wstatus = ft_pwd(true);
-	else if ((ft_strncmp(shell->cmd->cmd[0], "echo", 5) == 0))
-		shell->wstatus = ft_echo(shell);
-	else if (ft_strncmp(shell->cmd->cmd[0], "env", 4) == 0)
-		shell->wstatus = ft_env(shell);
-	else
-		return (false);
-	return (true);
-}
-
-int	exec_built_in(t_shell *shell)
-{
-	if (ft_strncmp(shell->cmd->cmd[0], "export", 5) == 0)
-		shell->wstatus = ft_export(shell);
-	else if (ft_strncmp(shell->cmd->cmd[0], "cd", 3) == 0)
-		shell->wstatus = ft_cd(shell);
-	else if (ft_strncmp(shell->cmd->cmd[0], "unset", 6) == 0)
-		shell->wstatus = ft_unset(shell);
-	else if (ft_strncmp(shell->cmd->cmd[0], "exit", 5) == 0)
-		ft_exit(shell);
-	else if (exec_built_in_inside_child(shell) == false)
-		return (false);
-	return (0);
-}
-
-bool	is_cmd_built_ins(t_shell *shell)
-{
-	if (ft_strncmp(shell->cmd->cmd[0], "export", 5) == 0)
-		return (true);
-	else if (ft_strncmp(shell->cmd->cmd[0], "pwd", 4) == 0)
-		return (true);
-	else if (ft_strncmp(shell->cmd->cmd[0], "cd", 3) == 0)
-		return (true);
-	else if ((ft_strncmp(shell->cmd->cmd[0], "echo", 5) == 0))
-		return (true);
-	else if (ft_strncmp(shell->cmd->cmd[0], "exit", 5) == 0)
-		return (true);
-	else if (ft_strncmp(shell->cmd->cmd[0], "env", 4) == 0)
-		return (true);
-	else if (ft_strncmp(shell->cmd->cmd[0], "unset", 6) == 0)
-		return (true);
-	return (false);
+	if (!cmd || !cmd->args || !cmd->args[0])
+		return (1);
+	if (is_builtin(cmd->args[0]))
+		return (execute_builtin(shell, cmd));
+	return (execute_external_cmd(shell, cmd));
 }

@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_tokens.c                                      :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 16:18:35 by lomont            #+#    #+#             */
-/*   Updated: 2025/07/04 23:00:29 by gletilly         ###   ########.fr       */
+/*   Created: 2025/07/05 05:30:00 by gletilly          #+#    #+#             */
+/*   Updated: 2025/07/05 05:30:00 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "builtins.h"
 
-void	free_tokens(t_token *token)
+int	builtin_env(t_shell *shell, t_cmd *cmd)
 {
-	t_token	*tmp;
+	int	i;
 
-	while (token)
+	(void)cmd;
+	if (!shell->envp)
+		return (1);
+	i = 0;
+	while (shell->envp[i])
 	{
-		tmp = token->next;
-		if (token->value)
-			free(token->value);
-		free(token);
-		token = tmp;
+		ft_putendl_fd(shell->envp[i], STDOUT_FILENO);
+		i++;
 	}
+	return (0);
 }
