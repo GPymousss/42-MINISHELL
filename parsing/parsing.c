@@ -6,7 +6,7 @@
 /*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 13:43:45 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/04 23:03:43 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/07/08 02:45:30 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ bool	parsing(t_shell *shell)
 	}
 	shell->tokens = tokens;
 	expand_tokens(shell, tokens);
-	if (parse_tokens_to_cmds(shell, tokens) != 0)
+	remove_empty_tokens(&shell->tokens);
+	if (!shell->tokens)
+		return (true);
+	if (parse_tokens_to_cmds(shell, shell->tokens) != 0)
 	{
 		free_cmds(shell->cmds);
 		shell->cmds = NULL;

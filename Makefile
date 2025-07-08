@@ -70,6 +70,7 @@ SRC_FILES = \
 	parsing/tokenizer_utils.c \
 	parsing/tokenizer.c \
 	parsing/tokenizer_helpers.c \
+	parsing/token_filter.c \
 	exec/exec.c \
 	exec/external_cmd.c \
 	exec/path_utils.c \
@@ -85,6 +86,10 @@ SRC_FILES = \
 	exec/builtin_unset.c \
 	exec/env_utils.c \
 	exec/env_utils2.c \
+	exec/pipe_utils.c \
+	exec/pipe_execution.c \
+	exec/redirections.c \
+	exec/here_doc.c \
 	init_shell.c \
 	main.c
 

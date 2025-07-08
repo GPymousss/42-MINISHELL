@@ -6,7 +6,7 @@
 /*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 00:26:23 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/05 23:39:36 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/07/08 02:45:40 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ char		*ft_strjoin_char(char *str, char c);
 char		*ft_strjoin_free(char *s1, char *s2);
 char		*remove_quotes(char *str);
 bool		parsing(t_shell *shell);
+void		remove_empty_tokens(t_token **tokens);
 
 #endif

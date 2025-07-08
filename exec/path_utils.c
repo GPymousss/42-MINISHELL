@@ -12,13 +12,38 @@
 
 #include "exec.h"
 
-static char	*check_absolute_path(char *cmd)
+static int	is_directory_check(char *path)
+{
+	struct stat	path_stat;
+
+	if (stat(path, &path_stat) == 0)
+		return ((path_stat.st_mode & 0170000) == 0040000);
+	return (0);
+}
+
+static char	*check_absolute_path(char *cmd, int *error_code, int *is_dir)
 {
 	if (ft_strchr(cmd, '/'))
 	{
-		if (is_valid_command(cmd))
-			return (ft_strdup(cmd));
-		return (NULL);
+		if (access(cmd, F_OK) != 0)
+		{
+			*error_code = CMD_NOT_FOUND;
+			*is_dir = 0;
+			return (NULL);
+		}
+		if (is_directory_check(cmd))
+		{
+			*error_code = PERMISSION_DENIED;
+			*is_dir = 1;
+			return (NULL);
+		}
+		if (access(cmd, X_OK) != 0)
+		{
+			*error_code = PERMISSION_DENIED;
+			*is_dir = 0;
+			return (NULL);
+		}
+		return (ft_strdup(cmd));
 	}
 	return (NULL);
 }
@@ -41,16 +66,19 @@ static char	*search_in_paths(char *cmd, char **paths)
 	return (NULL);
 }
 
-char	*find_command_path(char *cmd, char **envp)
+char	*find_command_path_with_error(char *cmd, char **envp,
+		int *error_code, int *is_dir)
 {
 	char	**paths;
 	char	*result;
 	char	*path_env;
 
+	*error_code = CMD_NOT_FOUND;
+	*is_dir = 0;
 	if (!cmd)
 		return (NULL);
-	result = check_absolute_path(cmd);
-	if (result)
+	result = check_absolute_path(cmd, error_code, is_dir);
+	if (result || *error_code == PERMISSION_DENIED)
 		return (result);
 	path_env = get_path_env(envp);
 	if (!path_env)
@@ -61,4 +89,12 @@ char	*find_command_path(char *cmd, char **envp)
 	result = search_in_paths(cmd, paths);
 	free_array(paths);
 	return (result);
+}
+
+char	*find_command_path(char *cmd, char **envp)
+{
+	int	error_code;
+	int	is_dir;
+
+	return (find_command_path_with_error(cmd, envp, &error_code, &is_dir));
 }

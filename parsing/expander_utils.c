@@ -6,7 +6,7 @@
 /*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:28:46 by llangana          #+#    #+#             */
-/*   Updated: 2025/07/05 22:57:06 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/07/08 02:39:11 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,6 @@ char	*expand_variable(t_shell *shell, const char *str, int *i)
 	val = get_env_from_list(shell->env, name);
 	free(name);
 	if (!val)
-	{
 		val = ft_strdup("");
-		if (!val)
-			return (NULL);
-	}
 	return (val);
 }

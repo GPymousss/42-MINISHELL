@@ -6,13 +6,11 @@
 /*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 00:31:50 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/05 23:35:46 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/07/08 03:00:20 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	debug_full_parsing(t_shell *shell, char *input);
 
 static void	handle_command(t_shell *shell, char *input)
 {
