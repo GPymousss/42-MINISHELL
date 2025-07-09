@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
+/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 05:30:00 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/05 05:30:00 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/07/09 07:34:52 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ int	builtin_exit(t_shell *shell, t_cmd *cmd)
 
 	if (!cmd->args[1])
 	{
+		exit_code = shell->exit_status;
 		free_shell(shell);
-		exit(shell->exit_status);
+		exit(exit_code);
 	}
 	if (!is_numeric(cmd->args[1]))
 	{
