@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
+/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 00:31:50 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/08 03:00:20 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/07/09 07:38:36 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,12 @@ static void	handle_command(t_shell *shell, char *input)
 
 static void	handle_eof(t_shell *shell)
 {
+	int	exit_code;
+
 	ft_putendl_fd("exit", STDOUT_FILENO);
+	exit_code = shell->exit_status;
 	free_shell(shell);
-	exit(shell->exit_status);
+	exit(exit_code);
 }
 
 int	main(int argc, char **argv, char **envp)
