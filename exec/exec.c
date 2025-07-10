@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 04:37:06 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/10 06:57:29 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/10 10:24:26 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,33 @@ static int	has_pipes(t_cmd *cmds)
 	return (cmds && cmds->next != NULL);
 }
 
-static int	backup_std_fds(int *stdin_backup, int *stdout_backup)
+static int	backup_std_fds(t_shell *shell)
 {
-	*stdin_backup = dup(STDIN_FILENO);
-	*stdout_backup = dup(STDOUT_FILENO);
-	if (*stdin_backup == -1 || *stdout_backup == -1)
+	if (shell->stdin_backup >= 0)
+		close(shell->stdin_backup);
+	if (shell->stdout_backup >= 0)
+		close(shell->stdout_backup);
+	shell->stdin_backup = dup(STDIN_FILENO);
+	shell->stdout_backup = dup(STDOUT_FILENO);
+	if (shell->stdin_backup == -1 || shell->stdout_backup == -1)
+	{
+		if (shell->stdin_backup != -1)
+			close(shell->stdin_backup);
+		if (shell->stdout_backup != -1)
+			close(shell->stdout_backup);
 		return (-1);
+	}
 	return (0);
 }
 
-static void	restore_std_fds(int stdin_backup, int stdout_backup)
+static void	restore_std_fds(t_shell *shell)
 {
-	dup2(stdin_backup, STDIN_FILENO);
-	dup2(stdout_backup, STDOUT_FILENO);
-	close(stdin_backup);
-	close(stdout_backup);
+	dup2(shell->stdin_backup, STDIN_FILENO);
+	dup2(shell->stdout_backup, STDOUT_FILENO);
+	close(shell->stdin_backup);
+	close(shell->stdout_backup);
+	shell->stdin_backup = -1;
+	shell->stdout_backup = -1;
 }
 
 int	exec(t_shell *shell)
@@ -52,22 +64,20 @@ int	exec(t_shell *shell)
 int	execute_single_cmd(t_shell *shell, t_cmd *cmd)
 {
 	int	exit_status;
-	int	stdin_backup;
-	int	stdout_backup;
 
 	if (!cmd || !cmd->args || !cmd->args[0])
 		return (1);
-	if (backup_std_fds(&stdin_backup, &stdout_backup) == -1)
+	if (backup_std_fds(shell) == -1)
 		return (1);
 	if (apply_redirections(cmd) == -1)
 	{
-		restore_std_fds(stdin_backup, stdout_backup);
+		restore_std_fds(shell);
 		return (1);
 	}
 	if (is_builtin(cmd->args[0]))
 		exit_status = execute_builtin(shell, cmd);
 	else
 		exit_status = execute_external_cmd(shell, cmd);
-	restore_std_fds(stdin_backup, stdout_backup);
+	restore_std_fds(shell);
 	return (exit_status);
 }
