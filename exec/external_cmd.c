@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 04:37:26 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/10 06:36:25 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/10 07:34:03 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	execute_external_cmd(t_shell *shell, t_cmd *cmd)
 		print_error_message(cmd->args[0], error_code, is_dir);
 		return (error_code);
 	}
-	ignore_sigint();
 	pid = fork();
 	if (pid == -1)
 	{
@@ -60,12 +59,8 @@ int	execute_external_cmd(t_shell *shell, t_cmd *cmd)
 		return (1);
 	}
 	if (pid == 0)
-	{
-		set_signals_child();
 		handle_child_process(shell, cmd, cmd_path);
-	}
 	(free(cmd_path), waitpid(pid, &status, 0));
-	set_signals_interactive();
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);

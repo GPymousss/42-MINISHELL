@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 02:19:54 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/10 06:22:17 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/10 07:35:54 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static int	read_heredoc_lines(int write_fd, char *delimiter)
 {
 	char	*line;
 
-	set_signals_heredoc();
 	while (1)
 	{
 		line = readline("> ");
@@ -81,6 +80,5 @@ int	handle_heredoc_redirection(char *delimiter)
 		return (-1);
 	read_heredoc_lines(pipe_fd[1], delimiter);
 	close(pipe_fd[1]);
-	set_signals_interactive();
 	return (redirect_heredoc_input(pipe_fd[0]));
 }

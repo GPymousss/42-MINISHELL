@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
+/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:28:29 by llangana          #+#    #+#             */
-/*   Updated: 2025/07/04 23:03:22 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/07/10 09:37:06 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char	*ft_strjoin_free(char *s1, char *s2)
 
 	new = ft_strjoin(s1, s2);
 	free(s1);
+	free(s2);
 	return (new);
 }
 

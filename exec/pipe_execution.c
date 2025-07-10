@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 02:00:44 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/10 06:18:34 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/10 07:34:47 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static void	setup_child_pipes(int **pipes, int cmd_index, int cmd_count)
 
 void	execute_pipe_child(t_shell *shell, t_cmd *cmd, t_pipe_data *data)
 {
-	set_signals_child();
 	setup_child_pipes(data->pipes, data->cmd_index, data->cmd_count);
 	if (apply_redirections(cmd) == -1)
 		exit(1);
@@ -77,6 +76,5 @@ int	wait_for_pipeline(pid_t *pids, int **pipes, int cmd_count)
 	free(statuses);
 	free(pids);
 	free(pipes);
-	set_signals_interactive();
 	return (final_status);
 }
