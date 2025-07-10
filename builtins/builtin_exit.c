@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 05:30:00 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/10 06:45:23 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/10 10:00:58 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	builtin_exit(t_shell *shell, t_cmd *cmd)
 {
 	int	exit_code;
 
+	ft_putendl_fd("exit", STDOUT_FILENO);
 	if (!cmd->args[1])
 	{
 		exit_code = shell->exit_status;
