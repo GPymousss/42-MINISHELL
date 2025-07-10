@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
+/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:17:06 by lomont            #+#    #+#             */
-/*   Updated: 2025/07/10 05:21:03 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/07/10 06:46:01 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,9 @@ void	free_shell(t_shell *shell)
 		free_envp_struct(shell->env);
 	if (shell->envp)
 		free_array(shell->envp);
+	if (shell->stdin_backup != -1)
+		close(shell->stdin_backup);
+	if (shell->stdout_backup != -1)
+		close(shell->stdout_backup);
 	free(shell);
 }

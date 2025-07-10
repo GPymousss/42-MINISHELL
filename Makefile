@@ -76,22 +76,23 @@ SRC_FILES = \
 	exec/path_utils.c \
 	exec/path_utils2.c \
 	exec/exec_errors.c \
-	exec/builtins.c \
-	exec/builtin_echo.c \
-	exec/builtin_env.c \
-	exec/builtin_exit.c \
-	exec/builtin_pwd.c \
-	exec/builtin_cd.c \
-	exec/builtin_export.c \
-	exec/builtin_unset.c \
+	builtins/builtins.c \
+	builtins/builtin_echo.c \
+	builtins/builtin_env.c \
+	builtins/builtin_exit.c \
+	builtins/builtin_pwd.c \
+	builtins/builtin_cd.c \
+	builtins/builtin_export.c \
+	builtins/builtin_unset.c \
 	exec/env_utils.c \
 	exec/env_utils2.c \
 	exec/pipe_utils.c \
 	exec/pipe_execution.c \
 	exec/redirections.c \
 	exec/here_doc.c \
-	exec/redirect_utils.c \
 	init_shell.c \
+	signals/signals.c \
+	signals/signals2.c \
 	main.c
 
 OBJ_DIR = obj

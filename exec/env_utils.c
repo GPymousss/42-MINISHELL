@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
+/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/10 05:22:18 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/10 05:22:18 by gletilly         ###   ########.fr       */
+/*   Created: 2025/07/05 05:30:00 by gletilly          #+#    #+#             */
+/*   Updated: 2025/07/10 05:14:22 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "../builtins/builtins.h"
 
 t_envp	*find_env_node(t_envp *env, char *key)
 {

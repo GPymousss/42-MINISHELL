@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 00:31:50 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/09 07:38:36 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/10 06:57:42 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,12 @@ static void	handle_command(t_shell *shell, char *input)
 
 static void	handle_eof(t_shell *shell)
 {
+	int	exit_code;
+
 	ft_putendl_fd("exit", STDOUT_FILENO);
-	if (shell->stdin_backup != -1)
-		close(shell->stdin_backup);
-	if (shell->stdout_backup != -1)
-		close(shell->stdout_backup);
+	exit_code = shell->exit_status;
 	free_shell(shell);
-	exit(shell->exit_status);
+	exit(exit_code);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -61,6 +60,7 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	while (1)
 	{
+		set_signals_interactive();
 		input = readline("bash-5.1$ ");
 		if (input == NULL)
 			handle_eof(shell);
