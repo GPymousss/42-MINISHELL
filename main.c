@@ -40,12 +40,13 @@ static void	handle_command(t_shell *shell, char *input)
 
 static void	handle_eof(t_shell *shell)
 {
-	int	exit_code;
-
 	ft_putendl_fd("exit", STDOUT_FILENO);
-	exit_code = shell->exit_status;
+	if (shell->stdin_backup != -1)
+		close(shell->stdin_backup);
+	if (shell->stdout_backup != -1)
+		close(shell->stdout_backup);
 	free_shell(shell);
-	exit(exit_code);
+	exit(shell->exit_status);
 }
 
 int	main(int argc, char **argv, char **envp)

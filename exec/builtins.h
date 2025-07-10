@@ -31,5 +31,6 @@ void	update_env_node(t_envp *node, char *new_value);
 t_envp	*create_env_node(char *key, char *value);
 void	add_env_node(t_shell *shell, char *key, char *value);
 void	rebuild_envp_array(t_shell *shell);
+int		setup_redirections(t_redir *redirs);
 
 #endif

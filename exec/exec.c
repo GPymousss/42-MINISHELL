@@ -34,9 +34,29 @@ int	exec(t_shell *shell)
 
 int	execute_single_cmd(t_shell *shell, t_cmd *cmd)
 {
+	int	saved_stdin;
+	int	saved_stdout;
+	int	result;
+
 	if (!cmd || !cmd->args || !cmd->args[0])
 		return (1);
+	saved_stdin = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
+	if (setup_redirections(cmd->redir) != 0)
+	{
+		dup2(saved_stdin, STDIN_FILENO);
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdin);
+		close(saved_stdout);
+		return (1);
+	}
 	if (is_builtin(cmd->args[0]))
-		return (execute_builtin(shell, cmd));
-	return (execute_external_cmd(shell, cmd));
+		result = execute_builtin(shell, cmd);
+	else
+		result = execute_external_cmd(shell, cmd);
+	dup2(saved_stdin, STDIN_FILENO);
+	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdin);
+	close(saved_stdout);
+	return (result);
 }

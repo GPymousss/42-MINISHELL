@@ -90,6 +90,7 @@ SRC_FILES = \
 	exec/pipe_execution.c \
 	exec/redirections.c \
 	exec/here_doc.c \
+	exec/redirect_utils.c \
 	init_shell.c \
 	main.c
 
