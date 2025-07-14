@@ -44,6 +44,10 @@ static void	handle_eof(t_shell *shell)
 
 	ft_putendl_fd("exit", STDOUT_FILENO);
 	exit_code = shell->exit_status;
+	if (shell->stdin_backup != -1)
+		close(shell->stdin_backup);
+	if (shell->stdout_backup != -1)
+		close(shell->stdout_backup);
 	free_shell(shell);
 	exit(exit_code);
 }
@@ -58,9 +62,9 @@ int	main(int argc, char **argv, char **envp)
 	shell = init_shell(envp);
 	if (!shell)
 		return (EXIT_FAILURE);
+	setup_signals();
 	while (1)
 	{
-		set_signals_interactive();
 		input = readline("bash-5.1$ ");
 		if (input == NULL)
 			handle_eof(shell);

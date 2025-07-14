@@ -29,6 +29,7 @@ static int	read_heredoc_lines(int write_fd, char *delimiter)
 {
 	char	*line;
 
+	setup_signals_heredoc();
 	while (1)
 	{
 		line = readline("> ");
@@ -74,11 +75,29 @@ static int	redirect_heredoc_input(int read_fd)
 
 int	handle_heredoc_redirection(char *delimiter)
 {
-	int	pipe_fd[2];
+	int		pipe_fd[2];
+	pid_t	pid;
+	int		status;
 
 	if (setup_heredoc_pipe(pipe_fd) == -1)
 		return (-1);
-	read_heredoc_lines(pipe_fd[1], delimiter);
+	pid = fork();
+	if (pid == -1)
+		return (close(pipe_fd[0]), close(pipe_fd[1]), -1);
+	if (pid == 0)
+	{
+		close(pipe_fd[0]);
+		read_heredoc_lines(pipe_fd[1], delimiter);
+		close(pipe_fd[1]);
+		exit(0);
+	}
 	close(pipe_fd[1]);
+	setup_signals_exec();
+	waitpid(pid, &status, 0);
+	setup_signals();
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		return (close(pipe_fd[0]), -1);
+	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+		return (close(pipe_fd[0]), -1);
 	return (redirect_heredoc_input(pipe_fd[0]));
 }

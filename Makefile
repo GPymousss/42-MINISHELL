@@ -90,9 +90,9 @@ SRC_FILES = \
 	exec/pipe_execution.c \
 	exec/redirections.c \
 	exec/here_doc.c \
+	signal_handler.c \
+	signal_setup.c \
 	init_shell.c \
-	signals/signals.c \
-	signals/signals2.c \
 	main.c
 
 OBJ_DIR = obj

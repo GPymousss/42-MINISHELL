@@ -37,6 +37,7 @@ static void	setup_child_pipes(int **pipes, int cmd_index, int cmd_count)
 
 void	execute_pipe_child(t_shell *shell, t_cmd *cmd, t_pipe_data *data)
 {
+	setup_child_signals();
 	setup_child_pipes(data->pipes, data->cmd_index, data->cmd_count);
 	if (apply_redirections(cmd) == -1)
 		exit(1);
@@ -52,13 +53,28 @@ void	execute_pipe_child(t_shell *shell, t_cmd *cmd, t_pipe_data *data)
 	}
 }
 
+static int	process_child_status(int status)
+{
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGINT)
+			write(STDOUT_FILENO, "\n", 1);
+		else if (WTERMSIG(status) == SIGQUIT)
+			ft_putendl_fd("Quit (core dumped)", STDERR_FILENO);
+		return (128 + WTERMSIG(status));
+	}
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (1);
+}
+
 int	wait_for_pipeline(pid_t *pids, int **pipes, int cmd_count)
 {
 	int	*statuses;
 	int	i;
 	int	final_status;
 
-	close_all_pipes(pipes, cmd_count);
+	(close_all_pipes(pipes, cmd_count), setup_signals_exec());
 	statuses = malloc(sizeof(int) * cmd_count);
 	if (!statuses)
 		return (1);
@@ -66,15 +82,11 @@ int	wait_for_pipeline(pid_t *pids, int **pipes, int cmd_count)
 	while (i < cmd_count)
 	{
 		waitpid(pids[i], &statuses[i], 0);
-		if (WIFEXITED(statuses[i]))
-			statuses[i] = WEXITSTATUS(statuses[i]);
-		else
-			statuses[i] = 1;
+		statuses[i] = process_child_status(statuses[i]);
 		i++;
 	}
+	setup_signals();
 	final_status = statuses[cmd_count - 1];
-	free(statuses);
-	free(pids);
-	free(pipes);
+	(free(statuses), free(pids), free(pipes));
 	return (final_status);
 }

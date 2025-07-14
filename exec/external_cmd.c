@@ -14,6 +14,7 @@
 
 static int	handle_child_process(t_shell *shell, t_cmd *cmd, char *cmd_path)
 {
+	setup_child_signals();
 	if (execve(cmd_path, cmd->args, shell->envp) == -1)
 	{
 		handle_exec_error(cmd->args[0], PERMISSION_DENIED);
@@ -37,11 +38,45 @@ static void	print_error_message(char *cmd, int error_code, int is_dir)
 		ft_putendl_fd(": command not found", STDERR_FILENO);
 }
 
+static int	wait_child_with_signals(pid_t pid)
+{
+	int	status;
+
+	setup_signals_exec();
+	waitpid(pid, &status, 0);
+	setup_signals();
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGINT)
+			write(STDOUT_FILENO, "\n", 1);
+		else if (WTERMSIG(status) == SIGQUIT)
+			ft_putendl_fd("Quit (core dumped)", STDERR_FILENO);
+		return (128 + WTERMSIG(status));
+	}
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (1);
+}
+
+static int	fork_and_execute(t_shell *shell, t_cmd *cmd, char *cmd_path)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+	{
+		(perror("fork"), free(cmd_path));
+		return (1);
+	}
+	if (pid == 0)
+		handle_child_process(shell, cmd, cmd_path);
+	free(cmd_path);
+	return (wait_child_with_signals(pid));
+}
+
 int	execute_external_cmd(t_shell *shell, t_cmd *cmd)
 {
 	char	*cmd_path;
-	pid_t	pid;
-	int		status;
 	int		error_code;
 	int		is_dir;
 
@@ -52,16 +87,5 @@ int	execute_external_cmd(t_shell *shell, t_cmd *cmd)
 		print_error_message(cmd->args[0], error_code, is_dir);
 		return (error_code);
 	}
-	pid = fork();
-	if (pid == -1)
-	{
-		(perror("fork"), free(cmd_path));
-		return (1);
-	}
-	if (pid == 0)
-		handle_child_process(shell, cmd, cmd_path);
-	(free(cmd_path), waitpid(pid, &status, 0));
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	return (1);
+	return (fork_and_execute(shell, cmd, cmd_path));
 }

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../builtins/builtins.h"
 #include "exec.h"
+#include "../builtins/builtins.h"
 
 static int	has_pipes(t_cmd *cmds)
 {

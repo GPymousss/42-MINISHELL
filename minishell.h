@@ -35,14 +35,16 @@
 # include "exec/exec.h"
 # include "parsing/parsing.h"
 
-t_shell			*init_shell(char **envp);
+extern volatile sig_atomic_t	g_heredoc_interrupted;
 
-//signals.c
-void			set_signals_interactive(void);
-//void			ignore_sigint(void);
-//void			set_signals_child(void);
-//void			set_signals_heredoc(void);
-void			sigint_handler(int signal);
-void			sigint_handler_heredoc(int signal);
+t_shell		*init_shell(char **envp);
+void		sigint_handler(int sig);
+void		sigquit_handler(int sig);
+void		sigint_handler_ignore(int sig);
+void		sigint_heredoc_handler(int sig);
+void		setup_signals(void);
+void		setup_signals_exec(void);
+void		setup_child_signals(void);
+void		setup_signals_heredoc(void);
 
 #endif

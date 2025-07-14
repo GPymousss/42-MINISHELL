@@ -43,5 +43,9 @@ int		wait_for_pipeline(pid_t *pids, int **pipes, int cmd_count);
 int		apply_redirections(t_cmd *cmd);
 int		apply_single_redirection(t_redir *redir);
 int		handle_heredoc_redirection(char *delimiter);
+void	setup_child_signals(void);
+void	setup_signals_exec(void);
+void	setup_signals(void);
+void	setup_signals_heredoc(void);
 
 #endif
