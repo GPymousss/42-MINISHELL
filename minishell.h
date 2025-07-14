@@ -39,7 +39,6 @@ extern volatile sig_atomic_t	g_heredoc_interrupted;
 
 t_shell		*init_shell(char **envp);
 void		sigint_handler(int sig);
-void		sigquit_handler(int sig);
 void		sigint_handler_ignore(int sig);
 void		sigint_heredoc_handler(int sig);
 void		setup_signals(void);

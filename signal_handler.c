@@ -23,13 +23,6 @@ void	sigint_handler(int sig)
 	rl_redisplay();
 }
 
-void	sigquit_handler(int sig)
-{
-	(void)sig;
-	write(STDOUT_FILENO, "Quit\n", 5);
-	exit(131);
-}
-
 void	sigint_handler_ignore(int sig)
 {
 	(void)sig;
