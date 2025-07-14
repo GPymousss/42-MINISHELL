@@ -34,5 +34,6 @@ void	sigint_heredoc_handler(int sig)
 	(void)sig;
 	g_heredoc_interrupted = 1;
 	write(STDOUT_FILENO, "\n", 1);
+	rl_cleanup_after_signal();
 	exit(130);
 }
