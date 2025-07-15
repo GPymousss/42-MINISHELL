@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 01:59:50 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/15 03:52:35 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/15 04:35:50 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static int	**create_pipes(int cmd_count)
 		if (!pipes[i] || pipe(pipes[i]) == -1)
 		{
 			close_pipes(pipes, i);
-			free(pipes);
 			return (NULL);
 		}
 		i++;

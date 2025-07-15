@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 00:31:50 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/15 04:03:45 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/15 04:50:40 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ int	main(int argc, char **argv, char **envp)
 	{
 		input = readline("bash-5.1$ ");
 		if (input == NULL)
+		{
+			shell->input = NULL;
 			handle_eof(shell);
+		}
 		handle_command(shell, input);
 	}
 	return (EXIT_SUCCESS);
