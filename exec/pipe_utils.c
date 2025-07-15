@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 01:59:50 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/15 04:35:50 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/15 05:55:07 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static int	**create_pipes(int cmd_count)
 		if (!pipes[i] || pipe(pipes[i]) == -1)
 		{
 			close_pipes(pipes, i);
+			free(pipes);
 			return (NULL);
 		}
 		i++;
@@ -108,7 +109,7 @@ int	execute_pipeline(t_shell *shell, t_cmd *cmds)
 		return (1);
 	pids = malloc(sizeof(pid_t) * cmd_count);
 	if (!pids)
-		return (close_pipes(pipes, cmd_count - 1), 1);
+		return (close_pipes(pipes, cmd_count), 1);
 	fork_pipeline_commands(shell, cmds, pipes, pids);
 	return (wait_for_pipeline(pids, pipes, cmd_count));
 }
