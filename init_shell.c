@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 23:00:03 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/08 10:14:38 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/15 04:18:28 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ t_shell	*init_shell(char **envp)
 	shell->env = NULL;
 	shell->envp = NULL;
 	shell->exit_status = 0;
-	shell->stdin_backup = dup(STDIN_FILENO);
-	shell->stdout_backup = dup(STDOUT_FILENO);
+	shell->stdin_backup = -1;
+	shell->stdout_backup = -1;
 	if (!envp)
 		return (shell);
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:17:06 by lomont            #+#    #+#             */
-/*   Updated: 2025/07/10 10:16:52 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/15 04:17:09 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	free_shell(t_shell *shell)
 	if (shell->cmds)
 		free_cmds(shell->cmds);
 	if (shell->env)
-		free_envp_struct(shell->env);
+		free_env(shell->env);
 	if (shell->envp)
-		free_array(shell->envp);
+		free_envp(shell->envp);
 	if (shell->stdin_backup >= 0)
 	{
 		close(shell->stdin_backup);

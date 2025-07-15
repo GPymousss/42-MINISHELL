@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 02:00:44 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/10 07:34:47 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/14 08:21:25 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,13 @@ int	wait_for_pipeline(pid_t *pids, int **pipes, int cmd_count)
 	int	i;
 	int	final_status;
 
-	(close_all_pipes(pipes, cmd_count), setup_signals_exec());
+	(close_all_pipes(pipes, cmd_count - 1), setup_signals_exec());
 	statuses = malloc(sizeof(int) * cmd_count);
 	if (!statuses)
+	{
+		free(pids);
 		return (1);
+	}
 	i = 0;
 	while (i < cmd_count)
 	{
@@ -87,6 +90,6 @@ int	wait_for_pipeline(pid_t *pids, int **pipes, int cmd_count)
 	}
 	setup_signals();
 	final_status = statuses[cmd_count - 1];
-	(free(statuses), free(pids), free(pipes));
+	(free(statuses), free(pids));
 	return (final_status);
 }

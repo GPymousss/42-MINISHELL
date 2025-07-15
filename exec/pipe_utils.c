@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 01:59:50 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/09 12:09:24 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/15 03:52:35 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ static void	close_pipes(int **pipes, int cmd_count)
 {
 	int	i;
 
+	if (!pipes)
+		return ;
 	i = 0;
-	while (i < cmd_count - 1)
+	while (i < cmd_count)
 	{
 		if (pipes[i])
 		{
@@ -62,6 +64,7 @@ static int	**create_pipes(int cmd_count)
 		if (!pipes[i] || pipe(pipes[i]) == -1)
 		{
 			close_pipes(pipes, i);
+			free(pipes);
 			return (NULL);
 		}
 		i++;
@@ -97,6 +100,7 @@ int	execute_pipeline(t_shell *shell, t_cmd *cmds)
 	int		cmd_count;
 	int		**pipes;
 	pid_t	*pids;
+	int		exit_status;
 
 	cmd_count = count_commands(cmds);
 	if (cmd_count == 1)
@@ -108,5 +112,8 @@ int	execute_pipeline(t_shell *shell, t_cmd *cmds)
 	if (!pids)
 		return (close_pipes(pipes, cmd_count), 1);
 	fork_pipeline_commands(shell, cmds, pipes, pids);
-	return (wait_for_pipeline(pids, pipes, cmd_count));
+	exit_status = wait_for_pipeline(pids, pipes, cmd_count);
+	if (pipes)
+		close_pipes(pipes, cmd_count - 1);
+	return (exit_status);
 }

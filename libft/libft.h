@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
+/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 00:22:56 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/05 23:26:27 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/07/14 07:31:32 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,9 @@ void		free_array(char **array);
 void		free_cmds(t_cmd *cmd);
 void		free_redirs(t_redir *redir);
 void		free_tokens(t_token *token);
-void		free_envp_struct(t_envp *env);
+//void		free_envp_struct(t_envp *env);
+void		free_env(t_envp *env);
+void		free_envp(char **envp);
 void		free_shell(t_shell *shell);
 char		*ft_strjoin_free(char *s1, char *s2);
 char		**free_array_partial(char **arr, int count);
