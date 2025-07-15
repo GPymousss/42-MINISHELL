@@ -99,7 +99,6 @@ int	execute_pipeline(t_shell *shell, t_cmd *cmds)
 	int		cmd_count;
 	int		**pipes;
 	pid_t	*pids;
-	int		exit_status;
 
 	cmd_count = count_commands(cmds);
 	if (cmd_count == 1)
@@ -109,10 +108,7 @@ int	execute_pipeline(t_shell *shell, t_cmd *cmds)
 		return (1);
 	pids = malloc(sizeof(pid_t) * cmd_count);
 	if (!pids)
-		return (close_pipes(pipes, cmd_count), 1);
+		return (close_pipes(pipes, cmd_count - 1), 1);
 	fork_pipeline_commands(shell, cmds, pipes, pids);
-	exit_status = wait_for_pipeline(pids, pipes, cmd_count);
-	if (pipes)
-		close_pipes(pipes, cmd_count - 1);
-	return (exit_status);
+	return (wait_for_pipeline(pids, pipes, cmd_count));
 }

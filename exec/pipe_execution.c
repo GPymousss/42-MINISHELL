@@ -26,6 +26,22 @@ static void	close_all_pipes(int **pipes, int cmd_count)
 	}
 }
 
+static void	free_pipes(int **pipes, int cmd_count)
+{
+	int	i;
+
+	if (!pipes)
+		return ;
+	i = 0;
+	while (i < cmd_count - 1)
+	{
+		if (pipes[i])
+			free(pipes[i]);
+		i++;
+	}
+	free(pipes);
+}
+
 static void	setup_child_pipes(int **pipes, int cmd_index, int cmd_count)
 {
 	if (cmd_index > 0)
@@ -74,7 +90,7 @@ int	wait_for_pipeline(pid_t *pids, int **pipes, int cmd_count)
 	int	i;
 	int	final_status;
 
-	(close_all_pipes(pipes, cmd_count - 1), setup_signals_exec());
+	(close_all_pipes(pipes, cmd_count), setup_signals_exec());
 	statuses = malloc(sizeof(int) * cmd_count);
 	if (!statuses)
 	{
@@ -90,6 +106,8 @@ int	wait_for_pipeline(pid_t *pids, int **pipes, int cmd_count)
 	}
 	setup_signals();
 	final_status = statuses[cmd_count - 1];
-	(free(statuses), free(pids));
+	free(statuses);
+	free(pids);
+	free_pipes(pipes, cmd_count);
 	return (final_status);
 }
