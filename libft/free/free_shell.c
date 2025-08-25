@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:17:06 by lomont            #+#    #+#             */
-/*   Updated: 2025/07/15 04:39:34 by llangana         ###   ########.fr       */
+/*   Updated: 2025/08/04 23:10:03 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	free_shell(t_shell *shell)
 		free_env(shell->env);
 	if (shell->envp)
 		free_envp(shell->envp);
+	if (shell->pipe_data)
+		free_pipe_data(shell->pipe_data);
 	if (shell->stdin_backup >= 0)
 	{
 		close(shell->stdin_backup);
@@ -36,5 +38,14 @@ void	free_shell(t_shell *shell)
 		close(shell->stdout_backup);
 		shell->stdout_backup = -1;
 	}
+	free(shell);
+}
+
+void	free_child(t_shell *shell, char *command_path)
+{
+	free_array(shell->envp);
+	free_all(shell);
+	if (command_path)
+		free(command_path);
 	free(shell);
 }

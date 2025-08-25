@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 01:59:50 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/15 05:55:07 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/16 22:01:01 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	count_commands(t_cmd *cmds)
 	}
 	return (count);
 }
-
+/*
 static void	close_pipes(int **pipes, int cmd_count)
 {
 	int	i;
@@ -46,6 +46,7 @@ static void	close_pipes(int **pipes, int cmd_count)
 	}
 	free(pipes);
 }
+*/
 
 static int	**create_pipes(int cmd_count)
 {
@@ -63,7 +64,7 @@ static int	**create_pipes(int cmd_count)
 		pipes[i] = malloc(sizeof(int) * 2);
 		if (!pipes[i] || pipe(pipes[i]) == -1)
 		{
-			close_pipes(pipes, i);
+			close_all_pipes(pipes, i);
 			free(pipes);
 			return (NULL);
 		}
@@ -109,7 +110,7 @@ int	execute_pipeline(t_shell *shell, t_cmd *cmds)
 		return (1);
 	pids = malloc(sizeof(pid_t) * cmd_count);
 	if (!pids)
-		return (close_pipes(pipes, cmd_count), 1);
+		return (close_all_pipes(pipes, cmd_count), 1);
 	fork_pipeline_commands(shell, cmds, pipes, pids);
 	return (wait_for_pipeline(pids, pipes, cmd_count));
 }

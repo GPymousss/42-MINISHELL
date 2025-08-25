@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
+/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 02:19:27 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/08 02:19:27 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/07/30 13:36:43 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	handle_append_redirection(char *filename)
 	return (0);
 }
 
-int	apply_single_redirection(t_redir *redir)
+int	apply_single_redirection(t_shell *shell, t_redir *redir)
 {
 	if (redir->symbol == REDIR_IN)
 		return (handle_input_redirection(redir->file));
@@ -84,11 +84,11 @@ int	apply_single_redirection(t_redir *redir)
 	else if (redir->symbol == APPEND)
 		return (handle_append_redirection(redir->file));
 	else if (redir->symbol == HERE_DOC)
-		return (handle_heredoc_redirection(redir->file));
+		return (handle_heredoc_redirection(shell, redir->file));
 	return (-1);
 }
 
-int	apply_redirections(t_cmd *cmd)
+int	apply_redirections(t_shell *shell, t_cmd *cmd)
 {
 	t_redir	*current;
 
@@ -97,7 +97,7 @@ int	apply_redirections(t_cmd *cmd)
 	current = cmd->redir;
 	while (current)
 	{
-		if (apply_single_redirection(current) == -1)
+		if (apply_single_redirection(shell, current) == -1)
 			return (-1);
 		current = current->next;
 	}

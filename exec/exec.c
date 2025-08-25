@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 04:37:06 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/15 05:54:28 by llangana         ###   ########.fr       */
+/*   Updated: 2025/07/30 13:37:48 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	execute_single_cmd(t_shell *shell, t_cmd *cmd)
 		return (1);
 	if (backup_std_fds(shell) == -1)
 		return (1);
-	if (apply_redirections(cmd) == -1)
+	if (apply_redirections(shell, cmd) == -1)
 	{
 		restore_std_fds(shell);
 		return (1);

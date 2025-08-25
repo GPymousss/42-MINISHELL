@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 00:22:56 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/14 07:31:32 by llangana         ###   ########.fr       */
+/*   Updated: 2025/08/04 23:11:34 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void		free_envp(char **envp);
 void		free_shell(t_shell *shell);
 char		*ft_strjoin_free(char *s1, char *s2);
 char		**free_array_partial(char **arr, int count);
+void		free_pipe_data(t_pipe_data *data);
 
 // PRINTF
 void		print_array(char **array);

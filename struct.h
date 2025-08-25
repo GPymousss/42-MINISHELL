@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
+/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 07:13:07 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/04 22:23:33 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/08/04 23:08:02 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,20 @@ typedef struct s_envp
 	struct s_envp		*next;
 }	t_envp;
 
+typedef struct s_pipe_data
+{
+	int		**pipes;
+	int		cmd_index;
+	int		cmd_count;
+}	t_pipe_data;
+
 typedef struct s_shell
 {
 	char				*input;
 	t_token				*tokens;
 	t_cmd				*cmds;
 	t_envp				*env;
+	t_pipe_data			*pipe_data;
 	char				**envp;
 	int					exit_status;
 	int					stdin_backup;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
+/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 05:32:28 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/14 05:32:28 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/08/04 12:16:07 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,5 @@ void	sigint_heredoc_handler(int sig)
 	(void)sig;
 	g_heredoc_interrupted = 1;
 	write(STDOUT_FILENO, "\n", 1);
-	rl_cleanup_after_signal();
-	exit(130);
+	close(STDIN_FILENO);
 }

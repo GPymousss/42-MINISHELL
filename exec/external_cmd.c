@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 04:37:26 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/10 07:34:03 by llangana         ###   ########.fr       */
+/*   Updated: 2025/08/04 13:23:57 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	execute_external_cmd(t_shell *shell, t_cmd *cmd)
 	if (!cmd_path)
 	{
 		print_error_message(cmd->args[0], error_code, is_dir);
+		free(cmd_path);
 		return (error_code);
 	}
 	return (fork_and_execute(shell, cmd, cmd_path));

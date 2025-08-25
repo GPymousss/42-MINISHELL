@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_errors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gletilly <pymousss.dev@gmail.com>          +#+  +:+       +#+        */
+/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 04:38:27 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/05 04:38:27 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/08/04 12:50:08 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,14 @@ void	handle_exec_error(char *cmd, int error_code)
 		ft_putendl_fd(": Permission denied", STDERR_FILENO);
 	else
 		ft_putendl_fd(": unknown error", STDERR_FILENO);
+}
+
+int	heredoc_failed(int status)
+{
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		return (1);
+	if (WIFEXITED(status) && (WEXITSTATUS(status) == 1
+			|| WEXITSTATUS(status) == 130))
+		return (1);
+	return (0);
 }

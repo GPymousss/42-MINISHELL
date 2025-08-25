@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 11:36:53 by llangana          #+#    #+#             */
-/*   Updated: 2025/07/14 07:30:47 by llangana         ###   ########.fr       */
+/*   Updated: 2025/08/04 23:10:17 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void	free_env(t_envp *env)
 
 	while (env)
 	{
-		tmp = env;
-		env = env->next;
-		free(tmp->key);
-		free(tmp->value);
-		free(tmp);
+		tmp = env->next;
+		free(env->key);
+		free(env->value);
+		free(env);
+		env = tmp;
 	}
 }
 
@@ -57,4 +57,25 @@ void	free_envp(char **envp)
 		i++;
 	}
 	free(envp);
+}
+
+void	free_pipe_data(t_pipe_data *data)
+{
+	int	i;
+
+	if (!data || !data->pipes)
+		return ;
+	i = 0;
+	while (i < data->cmd_count - 1)
+	{
+		if (data->pipes[i])
+		{
+			close(data->pipes[i][0]);
+			close(data->pipes[i][1]);
+			free(data->pipes[i]);
+		}
+		i++;
+	}
+	free(data->pipes);
+	data->pipes = NULL;
 }

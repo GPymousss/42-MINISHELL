@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 02:19:54 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/10 07:35:54 by llangana         ###   ########.fr       */
+/*   Updated: 2025/08/04 12:49:44 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,25 @@ static int	read_heredoc_lines(int write_fd, char *delimiter)
 {
 	char	*line;
 
+	g_heredoc_interrupted = 0;
 	setup_signals_heredoc();
 	while (1)
 	{
 		line = readline("> ");
+		if (g_heredoc_interrupted)
+			return (free(line), 1);
 		if (!line)
 		{
-			ft_putstr_fd("minishell: warning: ", STDERR_FILENO);
-			ft_putendl_fd("here-document delimited by end-of-file",
-				STDERR_FILENO);
+			if (!g_heredoc_interrupted)
+			{
+				ft_putstr_fd("minishell: warning: ", STDERR_FILENO);
+				ft_putendl_fd("here-document delimited by end-of-file",
+					STDERR_FILENO);
+			}
 			break ;
 		}
 		if (check_delimiter(line, delimiter))
-		{
-			free(line);
-			break ;
-		}
+			return (free(line), 0);
 		ft_putendl_fd(line, write_fd);
 		free(line);
 	}
@@ -73,7 +76,7 @@ static int	redirect_heredoc_input(int read_fd)
 	return (0);
 }
 
-int	handle_heredoc_redirection(char *delimiter)
+int	handle_heredoc_redirection(t_shell *shell, char *delimiter)
 {
 	int		pipe_fd[2];
 	pid_t	pid;
@@ -87,17 +90,16 @@ int	handle_heredoc_redirection(char *delimiter)
 	if (pid == 0)
 	{
 		close(pipe_fd[0]);
-		read_heredoc_lines(pipe_fd[1], delimiter);
+		status = read_heredoc_lines(pipe_fd[1], delimiter);
 		close(pipe_fd[1]);
-		exit(0);
+		free_shell(shell);
+		exit(status);
 	}
 	close(pipe_fd[1]);
 	setup_signals_exec();
 	waitpid(pid, &status, 0);
 	setup_signals();
-	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-		return (close(pipe_fd[0]), -1);
-	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+	if (heredoc_failed(status))
 		return (close(pipe_fd[0]), -1);
 	return (redirect_heredoc_input(pipe_fd[0]));
 }
