@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 07:13:07 by gletilly          #+#    #+#             */
-/*   Updated: 2025/08/04 23:08:02 by llangana         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:44:58 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_pipe_data
 	int		**pipes;
 	int		cmd_index;
 	int		cmd_count;
+	pid_t	*pids;
 }	t_pipe_data;
 
 typedef struct s_shell

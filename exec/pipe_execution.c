@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_execution.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 02:00:44 by gletilly          #+#    #+#             */
-/*   Updated: 2025/08/25 13:47:00 by llangana         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:49:14 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	execute_pipe_child(t_shell *shell, t_cmd *cmd, t_pipe_data *data)
 {
 	int	exit_status;
 
+	if (data->pids)
+		free(data->pids);
 	setup_child_signals();
 	setup_child_pipes(data->pipes, data->cmd_index, data->cmd_count);
 	if (apply_redirections(shell, cmd) == -1)

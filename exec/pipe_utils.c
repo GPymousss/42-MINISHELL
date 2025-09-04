@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 01:59:50 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/16 22:01:01 by llangana         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:49:38 by gletilly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,12 @@ static int	fork_pipeline_commands(t_shell *shell, t_cmd *cmds,
 	data.pipes = pipes;
 	data.cmd_count = cmd_count;
 	data.cmd_index = 0;
+	data.pids = pids;
 	while (current && data.cmd_index < cmd_count)
 	{
 		pids[data.cmd_index] = fork();
+		if (pids[data.cmd_index] == -1)
+			return (-1);
 		if (pids[data.cmd_index] == 0)
 			execute_pipe_child(shell, current, &data);
 		current = current->next;
@@ -111,6 +114,10 @@ int	execute_pipeline(t_shell *shell, t_cmd *cmds)
 	pids = malloc(sizeof(pid_t) * cmd_count);
 	if (!pids)
 		return (close_all_pipes(pipes, cmd_count), 1);
-	fork_pipeline_commands(shell, cmds, pipes, pids);
+	if (fork_pipeline_commands(shell, cmds, pipes, pids) == -1)
+	{
+		free(pids);
+		return (close_all_pipes(pipes, cmd_count), 1);
+	}
 	return (wait_for_pipeline(pids, pipes, cmd_count));
 }
