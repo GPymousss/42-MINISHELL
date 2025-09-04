@@ -6,11 +6,19 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 04:38:27 by gletilly          #+#    #+#             */
-/*   Updated: 2025/08/04 12:50:08 by llangana         ###   ########.fr       */
+/*   Updated: 2025/09/04 15:13:59 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+void	close_backup_in_child(t_shell *shell)
+{
+	if (shell->stdin_backup != -1)
+		close(shell->stdin_backup);
+	if (shell->stdout_backup != -1)
+		close(shell->stdout_backup);
+}
 
 void	handle_exec_error(char *cmd, int error_code)
 {

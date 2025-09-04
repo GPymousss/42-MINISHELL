@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 00:27:59 by gletilly          #+#    #+#             */
-/*   Updated: 2025/08/04 23:07:11 by llangana         ###   ########.fr       */
+/*   Updated: 2025/09/04 15:14:08 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ void	setup_signals(void);
 void	setup_signals_heredoc(void);
 void	close_all_pipes(int **pipes, int cmd_count);
 int		heredoc_failed(int status);
+void	close_backup_in_child(t_shell *shell);
 
 #endif

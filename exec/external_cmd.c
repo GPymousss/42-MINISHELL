@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 04:37:26 by gletilly          #+#    #+#             */
-/*   Updated: 2025/08/04 13:23:57 by llangana         ###   ########.fr       */
+/*   Updated: 2025/09/04 15:14:38 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ static int	fork_and_execute(t_shell *shell, t_cmd *cmd, char *cmd_path)
 		return (1);
 	}
 	if (pid == 0)
+	{
+		close_backup_in_child(shell);
 		handle_child_process(shell, cmd, cmd_path);
+	}
 	free(cmd_path);
 	return (wait_child_with_signals(pid));
 }
