@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 05:32:28 by gletilly          #+#    #+#             */
-/*   Updated: 2025/08/04 12:16:07 by llangana         ###   ########.fr       */
+/*   Updated: 2025/09/04 23:23:56 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	sigint_handler(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	g_heredoc_interrupted = 1;
 }
 
 void	sigint_handler_ignore(int sig)

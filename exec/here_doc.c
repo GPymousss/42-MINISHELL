@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 02:19:54 by gletilly          #+#    #+#             */
-/*   Updated: 2025/08/04 12:49:44 by llangana         ###   ########.fr       */
+/*   Updated: 2025/09/05 16:45:34 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,12 @@ static int	read_heredoc_lines(int write_fd, char *delimiter)
 	{
 		line = readline("> ");
 		if (g_heredoc_interrupted)
-			return (free(line), 1);
+			return (free(line), 130);
 		if (!line)
 		{
-			if (!g_heredoc_interrupted)
-			{
-				ft_putstr_fd("minishell: warning: ", STDERR_FILENO);
-				ft_putendl_fd("here-document delimited by end-of-file",
-					STDERR_FILENO);
-			}
+			ft_putstr_fd("minishell: warning: ", STDERR_FILENO);
+			ft_putendl_fd("here-document delimited by end-of-file",
+				STDERR_FILENO);
 			break ;
 		}
 		if (check_delimiter(line, delimiter))

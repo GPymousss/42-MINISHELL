@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gletilly <gletilly@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 01:59:50 by gletilly          #+#    #+#             */
-/*   Updated: 2025/09/04 17:49:38 by gletilly         ###   ########.fr       */
+/*   Updated: 2025/09/05 15:45:39 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,10 @@ int	execute_pipeline(t_shell *shell, t_cmd *cmds)
 	int		**pipes;
 	pid_t	*pids;
 
+	if (check_pipeline_syntax(cmds))
+		return (1);
+	if (prepare_heredocs(shell, cmds))
+		return (130);
 	cmd_count = count_commands(cmds);
 	if (cmd_count == 1)
 		return (execute_single_cmd(shell, cmds));

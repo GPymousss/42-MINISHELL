@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 04:37:06 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/30 13:37:48 by llangana         ###   ########.fr       */
+/*   Updated: 2025/09/05 16:31:21 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	has_pipes(t_cmd *cmds)
 	return (cmds && cmds->next != NULL);
 }
 
-static int	backup_std_fds(t_shell *shell)
+int	backup_std_fds(t_shell *shell)
 {
 	if (shell->stdin_backup >= 0)
 		close(shell->stdin_backup);
@@ -37,7 +37,7 @@ static int	backup_std_fds(t_shell *shell)
 	return (0);
 }
 
-static void	restore_std_fds(t_shell *shell)
+void	restore_std_fds(t_shell *shell)
 {
 	dup2(shell->stdin_backup, STDIN_FILENO);
 	dup2(shell->stdout_backup, STDOUT_FILENO);
@@ -65,8 +65,14 @@ int	execute_single_cmd(t_shell *shell, t_cmd *cmd)
 {
 	int	exit_status;
 
-	if (!cmd || !cmd->args || !cmd->args[0])
+	if (!cmd)
 		return (1);
+	if (!cmd->args || !cmd->args[0])
+	{
+		if (!cmd->redir)
+			return (1);
+		return (handle_redirs_only(shell, cmd));
+	}
 	if (backup_std_fds(shell) == -1)
 		return (1);
 	if (apply_redirections(shell, cmd) == -1)

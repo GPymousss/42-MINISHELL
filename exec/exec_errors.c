@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 04:38:27 by gletilly          #+#    #+#             */
-/*   Updated: 2025/09/04 15:13:59 by llangana         ###   ########.fr       */
+/*   Updated: 2025/09/05 16:28:08 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,34 @@ void	handle_exec_error(char *cmd, int error_code)
 		ft_putendl_fd(": unknown error", STDERR_FILENO);
 }
 
-int	heredoc_failed(int status)
+int	check_pipeline_syntax(t_cmd *cmds)
 {
-	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-		return (1);
-	if (WIFEXITED(status) && (WEXITSTATUS(status) == 1
-			|| WEXITSTATUS(status) == 130))
-		return (1);
+	t_cmd	*current;
+
+	current = cmds;
+	while (current)
+	{
+		if (!current->args || !current->args[0])
+		{
+			ft_putendl_fd(
+				"minishell: syntax error near unexpected token `|'",
+				STDERR_FILENO);
+			return (1);
+		}
+		current = current->next;
+	}
 	return (0);
+}
+
+int	handle_redirs_only(t_shell *shell, t_cmd *cmd)
+{
+	if (backup_std_fds(shell) == -1)
+		return (1);
+	if (apply_redirections(shell, cmd) == -1)
+	{
+		restore_std_fds(shell);
+		return (1);
+	}
+	restore_std_fds(shell);
+	return (shell->exit_status);
 }

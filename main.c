@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 00:31:50 by gletilly          #+#    #+#             */
-/*   Updated: 2025/07/16 20:28:34 by llangana         ###   ########.fr       */
+/*   Updated: 2025/09/04 23:29:31 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		input = readline("bash-5.1$ ");
+		if (g_heredoc_interrupted)
+		{
+			shell->exit_status = 130;
+			g_heredoc_interrupted = 0;
+		}
 		if (input == NULL)
 		{
 			shell->input = NULL;

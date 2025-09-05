@@ -90,6 +90,7 @@ SRC_FILES = \
 	exec/pipe_execution.c \
 	exec/redirections.c \
 	exec/here_doc.c \
+	exec/here_doc2.c \
 	signal_handler.c \
 	signal_setup.c \
 	init_shell.c \

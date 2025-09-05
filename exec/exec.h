@@ -6,7 +6,7 @@
 /*   By: llangana <llangana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 00:27:59 by gletilly          #+#    #+#             */
-/*   Updated: 2025/09/04 15:14:08 by llangana         ###   ########.fr       */
+/*   Updated: 2025/09/05 16:31:31 by llangana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,6 @@
 
 # define CMD_NOT_FOUND 127
 # define PERMISSION_DENIED 126
-
-/*
-typedef struct s_pipe_data
-{
-	int		**pipes;
-	int		cmd_index;
-	int		cmd_count;
-}	t_pipe_data;
-*/
 
 int		exec(t_shell *shell);
 int		execute_single_cmd(t_shell *shell, t_cmd *cmd);
@@ -52,5 +43,10 @@ void	setup_signals_heredoc(void);
 void	close_all_pipes(int **pipes, int cmd_count);
 int		heredoc_failed(int status);
 void	close_backup_in_child(t_shell *shell);
+int		prepare_heredocs(t_shell *shell, t_cmd *cmds);
+int		check_pipeline_syntax(t_cmd *cmds);
+int		handle_redirs_only(t_shell *shell, t_cmd *cmd);
+int		backup_std_fds(t_shell *shell);
+void	restore_std_fds(t_shell *shell);
 
 #endif
